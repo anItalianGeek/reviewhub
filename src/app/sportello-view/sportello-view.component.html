@@ -1,0 +1,41 @@
+<div id="main" *ngIf="utente | async as utente">
+    <div *ngIf="sportello | async as sportello">
+        <p>
+            {{sportello.nome_sportello}}, {{sportello.materia}} -
+            (Docente: {{sportello.docente_responsabile.nome + " " + sportello.docente_responsabile.cognome}})
+        </p>
+        <div id="button-container">
+            <button (click)="cancellaSportello()">Cancella Sportello</button>
+        </div>
+        <div id="container">
+            <div class="data-container">
+                <h3>Descrizione Corso</h3>
+                <textarea disabled>{{sportello.descrizione_sportello}}</textarea>
+            </div>
+            <div class="data-container">
+                <table>
+                    <tr>
+                        <th>Data/Ora Inizio</th>
+                        <th>Data/Ora Fine</th>
+                    </tr>
+                    <tr *ngFor="let giorno of sportello.giorni">
+                        <td>{{giorno.id.data_inizio}}</td>
+                        <td>{{giorno.id.data_fine}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="data-container" *ngIf="utente.ruolo !== 'STUDENT'">
+                <div *ngFor="let iscritto of iscrizioniSportello | async">
+                    <span>{{iscritto}}</span>
+                    <button *ngIf="utente.ruolo === 'ADMIN'" (click)="rimuoviIscritto">Rimuovi</button>
+                </div>
+            </div>
+            <div class="data-container" *ngIf="utente.ruolo === 'STUDENT'">
+                <p>Posti Disponibili: {{(sportello.max_iscritti - sportello.num_iscritti)}}</p>
+                <p>Posti Totali: {{sportello.max_iscritti}}</p>
+                <button *ngIf="alreadySubscribed" (click)="disiscrivi()">Cancella Iscrizione</button>
+                <button *ngIf="!alreadySubscribed" (click)="iscrivi()">Iscriviti</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div id="main">
+    <main>
+        <div *ngIf="utente | async as utente">
+            <div>
+                <p>Ciao {{utente.nome}}!</p>
+                <button *ngIf="utente.ruolo !== 'STUDENT'">Crea Sportello</button>
+            </div>
+            <div *ngIf="utente.ruolo == 'STUDENT'">
+                <span>Visualizza Sportelli: </span>
+                <label for="disponibiliCB">Disponibili</label>
+                <input type="radio" name="selezionaSportelli" id="disponibiliCB" #disponibiliCB>
+                <label for="prenotatiCB">Ai Quali Sei Iscritto</label>
+                <input type="radio" name="selezionaSportelli" id="prenotatiCB" #prenotatiCB>
+            </div>
+        </div>
+        <div>
+            <app-sportello-compact-view *ngFor="let sportello of sportelli | async" [sportello]="sportello" routerLink="sportello/{{sportello.id_sportello}}"></app-sportello-compact-view>
+        </div>
+    </main>
+</div>

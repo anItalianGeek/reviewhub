@@ -1,0 +1,31 @@
+<div id="main">
+    <div>
+        <div *ngIf="!showPasswordRecoveryForm" style="margin: 50px 0"><h1>Accedi a ReviewHub</h1></div>
+        <form class="form" *ngIf="!showPasswordRecoveryForm">
+            <span class="input-span">
+                <label for="email" class="label">Username (Email)</label>
+                <input type="email" name="email" id="email"/>
+            </span>
+            <span class="input-span">
+                <label for="password" class="label">Password</label>
+                <input type="password" name="password" id="password"/>
+            </span>
+            <span class="span">
+                <a (click)="showPasswordRecoveryForm = !showPasswordRecoveryForm">Password Dimenticata?</a>
+            </span>
+            <button class="submit" type="button">Accedi</button>
+            <span class="span">Non hai un account? <a href="#">Registrati</a></span>
+        </form>
+        <form class="form" *ngIf="showPasswordRecoveryForm">
+            <h2>Recupero Password Account ReviewHub</h2>
+            <h4>Inserisci la tua email, un link verrà spedito nella tua casella di posta, segui le istuzioni per recuperare la tua password.
+            Non dimenticarti di controllare lo spam!</h4>
+            <span class="input-span">
+                <label for="emailInput">Email</label>
+                <input type="email" name="emailInput" id="emailInput" required #recoveryEmail>
+            </span>
+            <input type="button" value="Request Password Recover" class="submit"
+            (click)="requestPasswordRecovery(recoveryEmail.value)">
+        </form>
+    </div>
+</div>
