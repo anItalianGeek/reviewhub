@@ -2,6 +2,50 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-p {
-    padding: 15px 30px;
+.sportello-compact {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sportello-compact .materia {
+    font-weight: bold;
+    color: #007BFF;
+    font-size: 16px;
+}
+
+.sportello-compact p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.sportello-compact .header {
+    font-weight: bold;
+    font-size: 18px;
+    color: #007BFF;
+}
+
+.sportello-compact .docente,
+.sportello-compact .posti-rimasti {
+    font-style: italic;
+    font-size: 14px;
+    color: #666;
+}
+
+.sportello-compact .posti-rimasti {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.sportello-compact .docente span,
+.sportello-compact .posti-rimasti span {
+    font-weight: normal;
 }

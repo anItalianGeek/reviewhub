@@ -1,0 +1,61 @@
+<div>
+    <div style="display: flex; justify-content: space-between; flex-direction: row">
+        <h2>{{username}}</h2>
+        <div style="display: flex; justify-content: space-between; flex-direction: row; gap: 10px">
+            <button (click)="eliminaUtente()">Elimina Utente</button>
+            <button (click)="salvaModifiche()" *ngIf="mostraTastoSalvaModifiche">Salva Modifiche</button>
+        </div>
+    </div>
+    <div id="container">
+        <div class="data-container">
+            <p>{{utente.nome}}</p>
+            <input type="text" name="nameChanger" id="nameChanger" *ngIf="cambioNome" [(ngModel)]="utente.nome" (keyup)="mostraTastoSalvaModifiche = true">
+            <button (click)="cambioNome = !cambioNome" *ngIf="!cambioNome">Modifica Nome</button>
+            <button (click)="cambioNome = !cambioNome" *ngIf="cambioNome">Cancella Modifica</button>
+        </div>
+        <div class="data-container">
+            <p>{{utente.cognome}}</p>
+            <input type="text" name="cognomeChanger" id="cognomeChanger" *ngIf="cambioCognome" [(ngModel)]="utente.cognome" (keyup)="mostraTastoSalvaModifiche = true">
+            <button (click)="cambioCognome = !cambioCognome" *ngIf="!cambioCognome">Modifica Cognome</button>
+            <button (click)="cambioCognome = !cambioCognome" *ngIf="cambioCognome">Cancella Modifica</button>
+        </div>
+        <div class="data-container">
+            <p>{{utente.classe}}</p>
+            <input type="text" name="classeChanger" id="classeChanger" *ngIf="cambioClasse" [(ngModel)]="utente.classe" (keyup)="mostraTastoSalvaModifiche = true">
+            <button (click)="cambioClasse = !cambioClasse" *ngIf="!cambioClasse">Modifica Classe</button>
+            <button (click)="cambioClasse = !cambioClasse" *ngIf="cambioClasse">Cancella Modifica</button>
+        </div>
+        <div class="data-container">
+            <p>{{utente.ruolo}}</p>
+            <select name="ruoloChanger" id="ruoloChanger" [(ngModel)]="utente.ruolo" *ngIf="cambioRuolo">
+                <option (keyup)="mostraTastoSalvaModifiche = true" value="ADMIN">ADMIN</option>
+                <option (keyup)="mostraTastoSalvaModifiche = true" value="TEACHER">DOCENTE</option>
+                <option (keyup)="mostraTastoSalvaModifiche = true" value="STUDENT">STUDENTE</option>
+            </select><br>
+            <button (click)="cambioRuolo = !cambioRuolo" *ngIf="!cambioRuolo">Modifica Ruolo</button>
+            <button (click)="cambioRuolo = !cambioRuolo" *ngIf="cambioRuolo">Cancella Modifica</button>
+        </div>
+        <div class="data-container">
+            <p>Modifica Password</p>
+            <input type="password" placeholder="Vecchia Password" name="vecchiaPassword" id="vecchiaPassword" #vecchiaPassword (keyup)="visualizzaCampiNuovaPassword()" style="display: none">
+            <input type="password" placeholder="Nuova Password" name="nuovaPassword" id="nuovaPassword" #nuovaPassword style="display: none">
+            <input type="password" placeholder="Conferma Nuova Password" name="confermaPassword" id="confermaPassword" #confermaPassword style="display: none">
+            <div>
+                <button (click)="cambioPassword = !cambioPassword; cambiaPassword()" *ngIf="nuovaPassword.value == confermaPassword.value && !cambioPassword">Modifica Password</button>
+                <button (click)="cambioPassword = !cambioPassword; cambiaPassword()" *ngIf="cambioPassword">Cancella Modifica</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="sportelliPrenotati.length > 0">
+        <h2>Iscrizioni Dell'utente</h2>
+        <div class="data-container">
+            <div *ngFor="let sportello of sportelliPrenotati">
+                <app-sportello-compact-view [sportello]="sportello"></app-sportello-compact-view>
+                <button (click)="disiscriviDalCorso(sportello.id_sportello)">Disicrivi Dal Corso</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="sportelliPrenotati.length == 0">
+        <h2>Lo studente non è iscritto ad alcun sportello.</h2>
+    </div>
+</div>

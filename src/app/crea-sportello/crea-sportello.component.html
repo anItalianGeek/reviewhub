@@ -1,45 +1,42 @@
 <div id="main">
+    <app-back-button style="position: fixed; top: 25px; left: 25px"></app-back-button>
     <div id="form">
         <h2 style="text-align: center">Crea un Nuovo Sportello</h2>
         <label for="nomeSportello">Nome Sportello: </label>
-        <input type="text" name="nomeSportello" id="nomeSportello" #nomeSportello>
+        <input type="text" name="nomeSportello" id="nomeSportello" required #nomeSportello>
         <label for="materia">Materia: </label>
         <select name="materia" id="materia" #materia>
-            <option value="" selected></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+            <option value="" selected>Seleziona Una Materia....</option>
+            <option *ngFor="let materia of materieEsistenti | async" value="{{materia.nome}}">{{materia.nome}}</option>
         </select>
-        <label for="maxPosti">Posti Massimi</label>
-        <input type="number" name="maxPosti" id="maxPosti" #maxPosti>
+        <label for="maxPosti">Posti Massimi: </label>
+        <input type="number" name="maxPosti" id="maxPosti" required #maxPosti>
+        <label for="aula">Aula: </label>
+        <select name="aula" id="aula">
+            <option value="" selected>Seleziona Una Aula...</option>
+            <option *ngFor="let aula of auleEsistenti | async" value="{{aula.id}}">{{aula.nome}}</option>
+        </select>
         <p><i><small>Modificare il nome del docente non è necessario! Ci pensa l'applicazione a caricare i dati!</small></i></p>
         <label for="descrizioneSportello">Descrizione Sportello: </label>
         <textarea id="descrizioneSportello" #descrizioneSportello></textarea>
-        <p>Inserimento Orari</p>
+        <h3>Inserimento Orari</h3>
         <label for="inizio">Data/Ora Inizio</label>
         <input type="datetime-local" name="inizio" id="inizio" #inizio>
         <label for="fine">Data/Ora Fine</label>
         <input type="datetime-local" name="fine" id="fine" #fine>
+        <button (click)="aggiungiOrario()">Aggiungi Orario</button>
         <table>
             <tr>
                 <th>Data/Ora Inizio</th>
                 <th>Data/Ora Fine</th>
+                <th>-</th>
             </tr>
             <tr *ngFor="let orario of orari">
-                <td>{{orario.data_inizio}}</td>
-                <td>{{orario.data_fine}}</td>
+                <td><input type="datetime-local" [(ngModel)]="orario.data_inizioId"></td>
+                <td><input type="datetime-local" [(ngModel)]="orario.data_fineId"></td>
+                <td><button (click)="cancellaData(orario)">Cancella Data</button></td>
             </tr>
         </table>
-        <button (click)="aggiungiOrario()">Aggiungi Orario</button>
         <button (click)="creaSportello()">Crea Sportello</button>
     </div>
 </div>

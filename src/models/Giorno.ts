@@ -3,7 +3,7 @@ export interface Giorno {
 }
 
 export interface GiornoId {
-    data_inizio: Date;
-    data_fine: Date;
+    data_inizioId: Date | string;
+    data_fineId: Date | string;
     sportelloId: number;
 }

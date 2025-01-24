@@ -1,0 +1,19 @@
+<div id="main">
+    <app-back-button></app-back-button>
+    <div style="display: flex; justify-content: space-between; flex-direction: row;">
+        <h1>Utenti Registrati</h1>
+        <div style="display: flex; align-items: center;">
+            <button (click)="route('aule')" style="margin-right: 5px;">Gestisci Aule</button>
+            <button (click)="route('materie')" style="margin-right: 5px;">Gestisci Materie</button>
+            <button (click)="route('crea-utente')">Crea Utente</button>
+        </div>
+    </div>
+    <div id="container" *ngIf="caricamentoCompletato">
+        <div *ngFor="let utente of datiPersone | async" >
+            <app-user-view [utente]="utente.persona" [sportelliPrenotati]="utente.sportelli"></app-user-view>
+            <hr>
+        </div>
+        <div *ngIf="!datiPersone">Nessun Utente Disponibile.</div>
+    </div>
+    <div *ngIf="!caricamentoCompletato"></div>
+</div>

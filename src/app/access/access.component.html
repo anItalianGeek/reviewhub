@@ -1,31 +1,59 @@
 <div id="main">
     <div>
-        <div *ngIf="!showPasswordRecoveryForm" style="margin: 50px 0"><h1>Accedi a ReviewHub</h1></div>
-        <form class="form" *ngIf="!showPasswordRecoveryForm">
+        <div *ngIf="!showPasswordRecoveryForm && loginPage" style="margin: 50px 0"><h1>Accedi a ReviewHub</h1></div>
+        <form class="form" *ngIf="!showPasswordRecoveryForm && loginPage">
             <span class="input-span">
                 <label for="email" class="label">Username (Email)</label>
-                <input type="email" name="email" id="email"/>
+                <input type="email" name="email" id="email" #email/>
             </span>
             <span class="input-span">
                 <label for="password" class="label">Password</label>
-                <input type="password" name="password" id="password"/>
+                <input type="password" name="password" id="password" #password/>
             </span>
-            <span class="span">
+            <!--    <span class="span">
                 <a (click)="showPasswordRecoveryForm = !showPasswordRecoveryForm">Password Dimenticata?</a>
-            </span>
-            <button class="submit" type="button">Accedi</button>
-            <span class="span">Non hai un account? <a href="#">Registrati</a></span>
+            </span>-->
+            <button class="submit" type="button" (click)="login()">Accedi</button>
+            <span class="span">Non hai un account? <a (click)="loginPage = !loginPage">Registrati</a></span>
         </form>
+
         <form class="form" *ngIf="showPasswordRecoveryForm">
             <h2>Recupero Password Account ReviewHub</h2>
-            <h4>Inserisci la tua email, un link verrà spedito nella tua casella di posta, segui le istuzioni per recuperare la tua password.
+            <h4>Inserisci la tua email, un link verrà spedito nella tua casella di posta, segui le istuzioni per
+            recuperare la tua password.
             Non dimenticarti di controllare lo spam!</h4>
             <span class="input-span">
                 <label for="emailInput">Email</label>
                 <input type="email" name="emailInput" id="emailInput" required #recoveryEmail>
             </span>
-            <input type="button" value="Request Password Recover" class="submit"
-            (click)="requestPasswordRecovery(recoveryEmail.value)">
+            <input type="button" value="Request Password Recover" class="submit" (click)="requestPasswordRecovery(recoveryEmail.value)">
+        </form>
+
+        <div *ngIf="!loginPage && !showPasswordRecoveryForm" style="margin: 50px 0"><h1>Registrati a ReviewHub</h1></div>
+        <form class="form" method="POST" *ngIf="!loginPage && !showPasswordRecoveryForm">
+            <span class="input-span">
+                <label for="email" class="label">Email</label>
+                <input type="email" name="email" id="email1" (keyup)="emailProposte.next(email_signup.value);" required #email_signup/>
+                <div *ngIf="!emailAvailable" style="color: red;">Email non disponibile!</div>
+            </span>
+            <span class="input-span">
+                <label for="password" class="label">Password</label>
+                <input type="password" name="password" id="password1" required #password_signup/>
+            </span>
+            <span class="input-span">
+                <label for="nome" class="label">Nome</label>
+                <input type="text" name="nome" id="nome" required #nome/>
+            </span>
+            <span class="input-span">
+                <label for="cognome" class="label">Cognome</label>
+                <input type="text" name="cognome" id="cognome" required #cognome/>
+            </span>
+            <span class="input-span">
+                <label for="classe" class="label">Classe</label>
+                <input type="text" name="classe" id="classe" required #classe/>
+            </span>
+            <input class="submit" type="button" value="Sign up" (click)="registrati()"/>
+            <span class="span">Hai già un account? <a (click)="loginPage = !loginPage">Log in</a></span>
         </form>
     </div>
 </div>

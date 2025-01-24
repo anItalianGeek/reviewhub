@@ -1,0 +1,45 @@
+<div id="main">
+    <app-back-button [noRedirectHome]="true"></app-back-button>
+    <h1>Crea Un Nuovo Utente</h1>
+    <div id="container">
+        <h2>Crea Nuovo Utente</h2>
+        <div class="data-container">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" (keyup)="emailProposte.next(email.value)" #email required>
+            <div *ngIf="!emailDisponibile" style="color: red;">Email non disponibile!</div>
+        </div>
+
+        <div class="data-container">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" #nome required>
+        </div>
+
+        <div class="data-container">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" #cognome required>
+        </div>
+
+        <div class="data-container">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" #password required>
+        </div>
+
+        <div class="data-container">
+            <label for="classe">Classe</label>
+            <input type="text" id="classe" name="classe" #classe required>
+        </div>
+
+        <div class="data-container">
+            <label for="ruolo">Ruolo</label>
+            <select id="ruolo" name="ruolo" #ruolo required>
+                <option value="ADMIN">ADMIN</option>
+                <option value="TEACHER">DOCENTE</option>
+                <option value="STUDENT">STUDENTE</option>
+            </select>
+        </div>
+
+        <div class="data-container">
+            <button (click)="crea()">Crea Utente</button>
+        </div>
+    </div>
+</div>

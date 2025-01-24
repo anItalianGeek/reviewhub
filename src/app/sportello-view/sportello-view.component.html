@@ -1,34 +1,60 @@
-<div id="main" *ngIf="utente | async as utente">
+<div id="main" *ngIf="utente | async as utente" style="max-width: 1000px">
+    <app-loader *ngIf="!caricamentoCompletato"></app-loader>
+    <app-back-button style="position: fixed; top: 30px; left: 30px;"></app-back-button>
     <div *ngIf="sportello | async as sportello">
-        <p>
-            {{sportello.nome_sportello}}, {{sportello.materia}} -
-            (Docente: {{sportello.docente_responsabile.nome + " " + sportello.docente_responsabile.cognome}})
-        </p>
+        <div>
+            <app-sportello-compact-view [sportello]="sportello"></app-sportello-compact-view>
+        </div>
         <div id="button-container">
-            <button (click)="cancellaSportello()">Cancella Sportello</button>
+            <button (click)="cancellaSportello()" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">Cancella Sportello</button>
+            <button *ngIf="mostraTastoSalvaModifiche" (click)="salvaModifiche()">Salva Modifiche</button>
         </div>
         <div id="container">
             <div class="data-container">
                 <h3>Descrizione Corso</h3>
-                <textarea disabled>{{sportello.descrizione_sportello}}</textarea>
+                <textarea *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)" [(ngModel)]="sportello.descrizione_sportello" (keyup)="mostraTastoSalvaModifiche = true"></textarea>
+                <textarea disabled *ngIf="utente.ruolo === 'STUDENT'">{{sportello.descrizione_sportello}}</textarea>
             </div>
             <div class="data-container">
-                <table>
-                    <tr>
-                        <th>Data/Ora Inizio</th>
-                        <th>Data/Ora Fine</th>
-                    </tr>
-                    <tr *ngFor="let giorno of sportello.giorni">
-                        <td>{{giorno.id.data_inizio}}</td>
-                        <td>{{giorno.id.data_fine}}</td>
-                    </tr>
-                </table>
+                <div class="data-input" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
+                    <label for="inizio">Data/Ora Inizio</label>
+                    <input type="datetime-local" name="inizio" id="inizio" #inizio>
+                </div>
+                <div class="data-input" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
+                    <label for="fine">Data/Ora Fine</label>
+                    <input type="datetime-local" name="fine" id="fine" #fine>
+                </div>
+                <div *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)"><button (click)="aggiungiOrario(); mostraTastoSalvaModifiche = true">Aggiungi Orario</button></div>
+                <div>
+                    <table>
+                        <tr>
+                            <th>Data/Ora Inizio</th>
+                            <th>Data/Ora Fine</th>
+                            <th *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">-</th>
+                        </tr>
+                        <tr *ngFor="let giorno of sportello.giorni" >
+                            <td>
+                                <input type="datetime-local" [(ngModel)]="giorno.id.data_inizioId" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)" (keyup)="mostraTastoSalvaModifiche = true">
+                                <input type="datetime-local" value="{{giorno.id.data_inizioId}}" *ngIf="utente.ruolo === 'STUDENT'" disabled>
+                            </td>
+                            <td>
+                                <input type="datetime-local" [(ngModel)]="giorno.id.data_fineId" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)" (keyup)="mostraTastoSalvaModifiche = true">
+                                <input type="datetime-local" value="{{giorno.id.data_fineId}}" *ngIf="utente.ruolo === 'STUDENT'" disabled>
+                            </td>
+                            <td *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)"><button (click)="cancellaData(giorno.id.data_inizioId, giorno.id.data_fineId); mostraTastoSalvaModifiche = true">Cancella Data</button></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="data-container" *ngIf="utente.ruolo !== 'STUDENT'">
+            <div class="data-container" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
                 <div *ngFor="let iscritto of iscrizioniSportello | async">
                     <span>{{iscritto}}</span>
-                    <button *ngIf="utente.ruolo === 'ADMIN'" (click)="rimuoviIscritto">Rimuovi</button>
+                    <button *ngIf="utente.ruolo === 'ADMIN'" (click)="rimuoviIscritto(iscritto); mostraTastoSalvaModifiche = true">Rimuovi</button>
                 </div>
+            </div>
+            <div class="data-container" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
+                <label for="postiMax">Posti Totali: </label>
+                <input type="number" name="postiMax" id="postiMax" min="{{sportello.num_iscritti}}" [(ngModel)]="sportello.max_iscritti" (keyup)="mostraTastoSalvaModifiche = true">
             </div>
             <div class="data-container" *ngIf="utente.ruolo === 'STUDENT'">
                 <p>Posti Disponibili: {{(sportello.max_iscritti - sportello.num_iscritti)}}</p>

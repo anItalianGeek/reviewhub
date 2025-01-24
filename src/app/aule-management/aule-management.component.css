@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    max-width: 600px;
+    font-family: 'Arial', sans-serif;
+}
+
+#main > div:nth-child(2) {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#main > div:nth-child(2) div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#main > div:nth-child(2) label {
+    flex: 1;
+    font-size: 14px;
+    color: #495057;
+    margin-right: 0.5rem;
+    text-align: right;
+}
+
+#main > div:nth-child(2) input {
+    flex: 2;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #495057;
+    transition: border-color 0.3s ease;
+}
+
+#main > div:nth-child(2) input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#main > div:nth-child(2) button {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#main > div:nth-child(2) button:hover {
+    background-color: #0056b3;
+}
+
+.aula-list {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.aula-list label {
+    display: block;
+    font-size: 14px;
+    color: #495057;
+    margin-top: 0.5rem;
+}
+
+.aula-list input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #495057;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.aula-list input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.aula-list button {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 0.5rem;
+}
+
+.aula-list button:hover {
+    background-color: #218838;
+}
+
+.aula-list button:last-child {
+    background-color: #dc3545;
+}
+
+.aula-list button:last-child:hover {
+    background-color: #c82333;
+}

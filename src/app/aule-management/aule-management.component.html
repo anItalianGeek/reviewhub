@@ -1,0 +1,22 @@
+<div id="main">
+    <app-back-button [noRedirectHome]="true"></app-back-button>
+    <div>
+        <div>
+            <label for="idAula">Numero Aula: </label>
+            <input type="number" name="idAula" id="idAula" #nuovoNum>
+        </div>
+        <div>
+            <label for="nomeAula">Nome Aula: </label>
+            <input type="text" name="nomeAula" id="nomeAula" #nuovoNome>
+        </div>
+        <button (click)="creaAula(nuovoNum.value, nuovoNome.value)">Crea Aula</button>
+    </div>
+    <div *ngFor="let aula of aule | async" class="aula-list">
+        <label for="id">Numero Aula: </label>
+        <input type="number" id="id" [(ngModel)]="aula.id" (keyup)="modificheFatte = true;">
+        <label for="nome">Nome Aula:</label>
+        <input type="text" id="nome" [(ngModel)]="aula.nome" (keyup)="modificheFatte = true;">
+        <button *ngIf="modificheFatte" (click)="modificaAula(aula)">Salva Modifiche</button>
+        <button (click)="cancellaAula(aula)">Cancella Aula</button>
+    </div>
+</div>

@@ -1,5 +1,14 @@
-<p>
-    {{sportello.nome_sportello}}, {{sportello.materia}} -
-    (Docente: {{sportello.docente_responsabile.nome + " " + sportello.docente_responsabile.cognome}})
-    - Posti Rimasti: {{(sportello.max_iscritti - sportello.num_iscritti)}}
-</p>
+<div class="sportello-compact">
+    <p class="header">
+        {{sportello.nome_sportello}}
+    </p>
+    <p class="materia">
+        <strong>Materia:</strong> {{sportello.materia.nome}}
+    </p>
+    <p class="docente">
+        <strong>Docente:</strong> {{sportello.docente_responsabile.nome + " " + sportello.docente_responsabile.cognome}}
+    </p>
+    <p class="posti-rimasti">
+        <strong>Posti Rimasti:</strong> <span>{{(sportello.max_iscritti - sportello.num_iscritti)}}</span>
+    </p>
+</div>

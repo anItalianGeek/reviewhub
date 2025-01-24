@@ -1,0 +1,16 @@
+<div id="main">
+    <app-back-button [noRedirectHome]="true"></app-back-button>
+    <div>
+        <div>
+            <label for="idMateria">Materia: </label>
+            <input type="text" name="idMateria" id="idMateria" #idMateria>
+        </div>
+        <button (click)="creaMateria(idMateria.value)">Crea Materia</button>
+    </div>
+    <div *ngFor="let materia of materie | async" class="materia-list">
+        <label for="id">Materia: </label>
+        <input type="text" id="id" [(ngModel)]="materia.nome" (keyup)="modificheFatte = true;">
+        <button *ngIf="modificheFatte" (click)="modificaMateria(materia)">Salva Modifiche</button>
+        <button (click)="cancellaMateria(materia)">Cancella Materia</button>
+    </div>
+</div>

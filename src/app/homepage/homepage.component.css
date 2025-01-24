@@ -2,10 +2,161 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Palette di colori */
+:root {
+    --primary-bg: #777777;
+    --secondary-bg: #dbe4ff;
+    --accent: #809bce;
+    --text-color: #3d348b;
+    --border-color: #6a4c93;
+}
+
+/* Stile generale */
+body {
+    color: var(--text-color);
+    background-color: var(--primary-bg);
+    margin: 0;
+    padding: 0;
+}
+
 #main {
-    height: 100vh;
     padding: 20px;
-    /*display: flex;
-    justify-content: center;
-    align-items: center;*/
+}
+
+#mainDiv > div {
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sportello {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#mainDiv > div:hover, .sportello:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#msgBenvenuto {
+    font-size: larger;
+    font-weight: bolder;
+}
+
+/* Pulsanti */
+#buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+button {
+    background-color: deepskyblue;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: lightblue;
+    color: black;
+}
+
+/* Input e label */
+#mainDiv > #pulsantiSportelli {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Spazio tra gli elementi */
+    flex-wrap: wrap; /* Gestisce il caso di schermi piccoli */
+}
+
+label {
+    color: var(--text-color);
+}
+
+/* Stile per i radio button */
+input[type="radio"] {
+    appearance: none; /* Rimuove lo stile predefinito */
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%; /* Forma circolare */
+    background-color: lightgray; /* Sfondo visibile */
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Stile quando selezionato */
+input[type="radio"]:checked {
+    background-color: gray;
+    border-color: var(--accent);
+    box-shadow: 0 0 6px rgba(128, 155, 206, 0.6); /* Leggera ombra colorata */
+}
+
+/* Effetto hover */
+input[type="radio"]:hover {
+    border-color: var(--text-color);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Ombra leggera */
+}
+
+span {
+    font-weight: bold;
+}
+
+/* Spaziature aggiuntive per maggiore ampiezza */
+#mainDiv > div {
+    padding: 30px; /* Maggiore spazio interno */
+    margin-bottom: 40px; /* Maggiore spazio tra i contenitori */
+}
+
+/* Barra di ricerca */
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 350px;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+}
+
+.input::placeholder {
+    color: #9e9ea7;
+}
+
+.input:focus, input:hover {
+    outline: none;
+    border-color: rgba(161, 161, 161, 0.4);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+}
+
+.icon {
+    position: absolute;
+    left: 1rem;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
 }
