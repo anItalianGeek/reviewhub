@@ -84,17 +84,7 @@ input[type="number"] {
     font-size: 14px;
     width: 100%;
     max-width: 300px;
-}
-
-input[type="datetime-local"] {
-    width: 100%;
-    max-width: 300px;
     box-sizing: border-box;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    float: right;
 }
 
 .data-input {
@@ -105,9 +95,13 @@ input[type="datetime-local"] {
 table {
     width: 100%;
     border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
 }
 
-table th, table td {
+
+table th,
+table td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -185,6 +179,7 @@ p span {
     font-weight: bold;
 }
 
+/* Media Query per tablet (max-width: 768px) */
 @media screen and (max-width: 768px) {
     #container {
         flex-direction: column;
@@ -192,5 +187,66 @@ p span {
 
     .data-container {
         width: 100%;
+    }
+}
+
+/* Media Query per dispositivi mobili (max-width: 600px) */
+@media screen and (max-width: 600px) {
+    /* Riduce padding e margini per sfruttare lo spazio limitato */
+    #main {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    /* Organizza i pulsanti in colonna per una migliore usabilità */
+    #button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #button-container button {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Adatta il container principale dei dati */
+    #container {
+        flex-direction: column;
+    }
+
+    .data-container {
+        padding: 10px;
+    }
+
+    /* Ridimensiona la textarea per schermi piccoli */
+    textarea {
+        height: 100px;
+    }
+
+    /* Estendi gli input a tutta la larghezza */
+    input[type="datetime-local"],
+    input[type="number"] {
+        max-width: 100%;
+    }
+
+    /* Riorganizza i campi con label e input in colonna */
+    .data-input {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Riduce il padding della tabella per una migliore visualizzazione */
+    table th,
+    table td {
+        padding: 5px;
+        font-size: 12px;
     }
 }

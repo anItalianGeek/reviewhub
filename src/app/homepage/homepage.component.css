@@ -27,8 +27,8 @@ body {
     background-color: var(--secondary-bg);
     border: 2px solid var(--border-color);
     border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 30px;
+    padding: 30px; /* Maggiore spazio interno */
+    margin-bottom: 40px; /* Maggiore spazio tra i contenitori */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -113,12 +113,6 @@ span {
     font-weight: bold;
 }
 
-/* Spaziature aggiuntive per maggiore ampiezza */
-#mainDiv > div {
-    padding: 30px; /* Maggiore spazio interno */
-    margin-bottom: 40px; /* Maggiore spazio tra i contenitori */
-}
-
 /* Barra di ricerca */
 .group {
     display: flex;
@@ -159,4 +153,41 @@ span {
     fill: #9e9ea7;
     width: 1rem;
     height: 1rem;
+}
+
+/* Media Query per dispositivi mobili */
+@media screen and (max-width: 600px) {
+    /* Riduce il padding generale per sfruttare meglio lo spazio */
+    #main {
+        padding: 10px;
+    }
+    /* Riduce padding e margine interno dei contenitori */
+    #mainDiv > div {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    /* Riorganizza i pulsanti in colonna */
+    #buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    /* Adatta la barra di ricerca a schermi più piccoli */
+    .group {
+        max-width: 100%;
+    }
+    .input {
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    /* Sistema la disposizione dei radio button e label */
+    #mainDiv > #pulsantiSportelli {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
 }

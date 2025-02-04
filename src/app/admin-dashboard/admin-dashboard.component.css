@@ -25,3 +25,29 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+@media screen and (max-width: 600px) {
+    /* Seleziono il primo div figlio di #main (cioè il contenitore con h1 e i pulsanti) */
+    #main > div:first-child {
+        /* Forzo la disposizione in colonna, sovrascrivendo l’inline style */
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    /* Aggiungo margine inferiore al titolo per separarlo dai pulsanti */
+    #main > div:first-child h1 {
+        margin-bottom: 10px;
+    }
+
+    /* Seleziono il contenitore dei pulsanti (il div interno al primo div) */
+    #main > div:first-child > div {
+        /* Permetto l’avvolgimento dei pulsanti */
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    /* Opzionale: se vuoi evitare qualunque overflow orizzontale, puoi forzare l’overflow */
+    #main {
+        overflow-x: auto;
+    }
+}
