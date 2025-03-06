@@ -64,12 +64,12 @@ export class SportelloViewComponent implements OnInit {
                             this.alreadySubscribed = true;
                     });
 
-                    this.sportello.subscribe(sportello => {
+                    /*this.sportello.subscribe(sportello => {
                         sportello.giorni.forEach(g => {
                             g.id.data_inizioId = new Date(g.id.data_inizioId).toISOString().slice(0, 16);
                             g.id.data_fineId = new Date(g.id.data_fineId).toISOString().slice(0, 16);
                         })
-                    })
+                    })*/
 
                     this.caricamentoCompletato = true;
 
@@ -91,8 +91,15 @@ export class SportelloViewComponent implements OnInit {
         this.sportello.subscribe(sportello => {
            sportello.giorni.push({
                id: {
-                   data_inizioId: new Date(this.inizio.nativeElement.value).toISOString().slice(0, 16),
-                   data_fineId: new Date(this.fine.nativeElement.value).toISOString().slice(0, 16),
+                   data_inizioId: new Date(
+                       new Date(this.inizio.nativeElement.value).getTime() -
+                       new Date(this.inizio.nativeElement.value).getTimezoneOffset() * 60000
+                   ).toISOString().slice(0, 16)
+                   ,
+                   data_fineId: new Date(
+                       new Date(this.fine.nativeElement.value).getTime() -
+                       new Date(this.fine.nativeElement.value).getTimezoneOffset() * 60000
+                   ).toISOString().slice(0, 16),
                    sportelloId: sportello.id_sportello
                }
            })

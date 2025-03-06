@@ -27,21 +27,20 @@
         </div>
         <div class="data-container">
             <p>{{utente.ruolo}}</p>
-            <select name="ruoloChanger" id="ruoloChanger" [(ngModel)]="utente.ruolo" *ngIf="cambioRuolo">
-                <option (keyup)="mostraTastoSalvaModifiche = true" value="ADMIN">ADMIN</option>
-                <option (keyup)="mostraTastoSalvaModifiche = true" value="TEACHER">DOCENTE</option>
-                <option (keyup)="mostraTastoSalvaModifiche = true" value="STUDENT">STUDENTE</option>
+            <select name="ruoloChanger" id="ruoloChanger" [(ngModel)]="utente.ruolo" (click)="mostraTastoSalvaModifiche = true" *ngIf="cambioRuolo">
+                <option value="ADMIN">ADMIN</option>
+                <option value="TEACHER">DOCENTE</option>
+                <option value="STUDENT">STUDENTE</option>
             </select><br>
             <button (click)="cambioRuolo = !cambioRuolo" *ngIf="!cambioRuolo">Modifica Ruolo</button>
             <button (click)="cambioRuolo = !cambioRuolo" *ngIf="cambioRuolo">Cancella Modifica</button>
         </div>
         <div class="data-container">
             <p>Modifica Password</p>
-            <input type="password" placeholder="Vecchia Password" name="vecchiaPassword" id="vecchiaPassword" #vecchiaPassword (keyup)="visualizzaCampiNuovaPassword()" style="display: none">
             <input type="password" placeholder="Nuova Password" name="nuovaPassword" id="nuovaPassword" #nuovaPassword style="display: none">
-            <input type="password" placeholder="Conferma Nuova Password" name="confermaPassword" id="confermaPassword" #confermaPassword style="display: none">
+            <input type="password" placeholder="Conferma Nuova Password" name="confermaPassword" id="confermaPassword" #confermaPassword (keyup)=" mostraTastoSalvaModifiche = nuovaPassword.value == confermaPassword.value" style="display: none">
             <div>
-                <button (click)="cambioPassword = !cambioPassword; cambiaPassword()" *ngIf="nuovaPassword.value == confermaPassword.value && !cambioPassword">Modifica Password</button>
+                <button (click)="cambioPassword = !cambioPassword; cambiaPassword()" *ngIf="!cambioPassword">Modifica Password</button>
                 <button (click)="cambioPassword = !cambioPassword; cambiaPassword()" *ngIf="cambioPassword">Cancella Modifica</button>
             </div>
         </div>

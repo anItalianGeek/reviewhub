@@ -12,7 +12,7 @@
         <label for="maxPosti">Posti Massimi: </label>
         <input type="number" name="maxPosti" id="maxPosti" required #maxPosti>
         <label for="aula">Aula: </label>
-        <select name="aula" id="aula">
+        <select name="aula" id="aula" #aula>
             <option value="" selected>Seleziona Una Aula...</option>
             <option *ngFor="let aula of auleEsistenti | async" value="{{aula.id}}">{{aula.nome}}</option>
         </select>

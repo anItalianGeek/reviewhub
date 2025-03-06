@@ -46,7 +46,7 @@ export class CreaUtenteComponent {
                 nome: this.nome.nativeElement.value,
                 cognome: this.cognome.nativeElement.value,
                 ruolo: this.ruolo.nativeElement.value,
-                password: this.sha256.encrypt(this.password.nativeElement.value),
+                password: this.password.nativeElement.value,
                 sportelli: [],
                 authTokens: [],
                 iscrizioni: []

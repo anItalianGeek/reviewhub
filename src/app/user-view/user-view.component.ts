@@ -10,15 +10,15 @@ import {FormsModule} from '@angular/forms';
 import {Sha256Service} from '../../services/sha256.service';
 
 @Component({
-  selector: 'app-user-view',
+    selector: 'app-user-view',
     imports: [
         SportelloCompactViewComponent,
         NgFor,
         NgIf,
         FormsModule
     ],
-  templateUrl: './user-view.component.html',
-  styleUrl: './user-view.component.css'
+    templateUrl: './user-view.component.html',
+    styleUrl: './user-view.component.css'
 })
 export class UserViewComponent implements OnChanges {
 
@@ -52,43 +52,43 @@ export class UserViewComponent implements OnChanges {
     }
 
     salvaModifiche() {
-        if (this.sha256.encrypt(this.vecchiaPassword.nativeElement.value) == this.utente.password)
+        if (this.nuovaPassword.nativeElement && this.confermaPassword.nativeElement)
             if (this.nuovaPassword.nativeElement.value == this.confermaPassword.nativeElement.value)
-                this.utente.password = this.sha256.encrypt(this.confermaPassword.nativeElement.value);
+                this.utente.password = this.confermaPassword.nativeElement.value;
+            else {
+                alert("La nuova password non combacia con la conferma!");
+                return;
+            }
 
-        this.personaService.modificaPersona(this.utente, localStorage.getItem('auth-id')!).subscribe();
+        this.personaService.modificaPersona(this.utente, localStorage.getItem('auth-id')!).subscribe(success => location.reload(), error => {if (error.status >= 400) alert(error.message); else location.reload();});
     }
 
     eliminaUtente() {
         this.personaService.cancellaPersona(this.utente.email, localStorage.getItem('auth-id')!).subscribe(
-            response => {location.reload()},
+            response => {
+                location.reload()
+            },
             error => alert(error)
         );
     }
 
     disiscriviDalCorso(id: number) {
         this.sportelloService.rimuoviIscritto(id, this.utente.email, localStorage.getItem('auth-id')!).subscribe(
-            response => {location.reload()},
+            response => {
+                location.reload()
+            },
             error => alert(error)
         )
     }
 
-    visualizzaCampiNuovaPassword() {
-        if (this.vecchiaPassword.nativeElement.value != '') {
-            this.nuovaPassword.nativeElement.style.display = 'initial';
-            this.confermaPassword.nativeElement.style.display = 'initial';
-        } else {
-            this.nuovaPassword.nativeElement.style.display = 'none';
-            this.confermaPassword.nativeElement.style.display = 'none';
-        }
-    }
-
     cambiaPassword() {
-        if (this.cambioPassword)
-            this.vecchiaPassword.nativeElement.style.display = 'initial';
+        if (this.cambioPassword){
+            this.nuovaPassword.nativeElement.value = '';
+            this.nuovaPassword.nativeElement.style.display = 'initial';
+            this.confermaPassword.nativeElement.value = '';
+            this.confermaPassword.nativeElement.style.display = 'initial';
+        }
         else {
-            this.vecchiaPassword.nativeElement.value = '';
-            this.vecchiaPassword.nativeElement.style.display = 'none';
             this.nuovaPassword.nativeElement.value = '';
             this.nuovaPassword.nativeElement.style.display = 'none';
             this.confermaPassword.nativeElement.value = '';

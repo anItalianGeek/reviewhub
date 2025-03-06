@@ -4,6 +4,7 @@ import {PersonaService} from '../../services/persona.service';
 import {Sha256Service} from '../../services/sha256.service';
 import {Router} from '@angular/router';
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
+import {TmplAstLetDeclaration} from '@angular/compiler';
 
 @Component({
     selector: 'app-access',
@@ -30,7 +31,7 @@ export class AccessComponent {
 
     constructor(private personaService: PersonaService, private sha256encryptor: Sha256Service, private route: Router) {
         if (localStorage.getItem('auth-role') != null && localStorage.getItem('auth-id') != null && localStorage.getItem('auth-token') != null) {
-            this.route.navigateByUrl("/login");
+            this.route.navigateByUrl("/home");
         }
 
         this.showPasswordRecoveryForm = false;
@@ -47,7 +48,7 @@ export class AccessComponent {
     login() {
         this.personaService.logIn({
             email: this.email.nativeElement.value,
-            password: this.sha256encryptor.encrypt(this.password.nativeElement.value),
+            password: this.password.nativeElement.value,
             classe: null,
             ruolo: 'NONE',
             nome: null,
@@ -68,13 +69,13 @@ export class AccessComponent {
         if (this.emailAvailable)
             this.personaService.creaPersona({
                 email: this.email_signup.nativeElement.value,
-                password: this.sha256encryptor.encrypt(this.password_signup.nativeElement.value),
+                password: this.password_signup.nativeElement.value,
                 classe: this.classe.nativeElement.value,
                 ruolo: 'STUDENT',
                 nome: this.nome.nativeElement.value,
                 cognome: this.cognome.nativeElement.value,
                 sportelli: null
-            }).subscribe(success => location.reload(), error => alert(error));
+            }).subscribe(success => location.reload(), error => {if (error.status >= 400) alert(error.message); else location.reload();});
         else
             alert("Email Non Disponibile! Impossibile creare l'account!");
     }
