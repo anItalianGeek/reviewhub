@@ -9,7 +9,7 @@ import {Materia} from '../models/Materia';
 })
 export class MateriaService {
 
-    private readonly apiUrl = 'https://172.18.8.186:8888/materia';
+    private readonly apiUrl = 'https://reviewhub.chilesotti.it:8888/materia';
 
     constructor(private http: HttpClient) {
     }

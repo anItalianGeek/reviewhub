@@ -30,7 +30,7 @@ export class AccessComponent {
 
     constructor(private personaService: PersonaService, private sha256encryptor: Sha256Service, private route: Router) {
         if (localStorage.getItem('auth-role') != null && localStorage.getItem('auth-id') != null && localStorage.getItem('auth-token') != null) {
-            this.route.navigateByUrl("/login");
+            this.route.navigateByUrl("/home");
         }
 
         this.showPasswordRecoveryForm = false;
@@ -47,7 +47,7 @@ export class AccessComponent {
     login() {
         this.personaService.logIn({
             email: this.email.nativeElement.value,
-            password: this.sha256encryptor.encrypt(this.password.nativeElement.value),
+            password: this.password.nativeElement.value,
             classe: null,
             ruolo: 'NONE',
             nome: null,
@@ -68,13 +68,13 @@ export class AccessComponent {
         if (this.emailAvailable)
             this.personaService.creaPersona({
                 email: this.email_signup.nativeElement.value,
-                password: this.sha256encryptor.encrypt(this.password_signup.nativeElement.value),
+                password: this.password_signup.nativeElement.value,
                 classe: this.classe.nativeElement.value,
                 ruolo: 'STUDENT',
                 nome: this.nome.nativeElement.value,
                 cognome: this.cognome.nativeElement.value,
                 sportelli: null
-            }).subscribe(success => location.reload(), error => alert(error));
+            }).subscribe(success => location.reload(), error => {if (error.status < 400) location.reload(); else alert(error.message + "\n(Tuttavia prova ad accedere al tuo account...)")});
         else
             alert("Email Non Disponibile! Impossibile creare l'account!");
     }

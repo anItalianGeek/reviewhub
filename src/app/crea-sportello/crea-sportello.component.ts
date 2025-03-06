@@ -37,7 +37,6 @@ export class CreaSportelloComponent {
     @ViewChild('fine', { static: false }) fine!: ElementRef<HTMLInputElement>;
     @ViewChild('aula', { static: false }) aula!: ElementRef<HTMLSelectElement>;
     orari: GiornoId[] = [];
-    sportello!: Sportello;
     auleEsistenti: Observable<Aula[]>;
     materieEsistenti: Observable<Materia[]>;
 
@@ -53,8 +52,14 @@ export class CreaSportelloComponent {
 
     aggiungiOrario() {
         this.orari.push({
-            data_inizioId: new Date(this.inizio.nativeElement.value).toISOString().slice(0, 16),
-            data_fineId: new Date(this.fine.nativeElement.value).toISOString().slice(0, 16),
+            data_inizioId: new Date(
+		new Date(this.inizio.nativeElement.value).getTime() -
+		new Date(this.inizio.nativeElement.value).getTimezoneOffset() * 60000
+	    ).toISOString().slice(0, 16),
+            data_fineId: new Date(
+		new Date(this.fine.nativeElement.value).getTime() -
+		new Date(this.fine.nativeElement.value).getTimezoneOffset() * 60000	
+	    ).toISOString().slice(0, 16),
             sportelloId: -1
         })
     }
@@ -77,7 +82,7 @@ export class CreaSportelloComponent {
         );
 
         this.utente.subscribe(datiUtente => {
-            this.sportello = {
+            let sportello: Sportello = {
                 id_sportello: -1,
                 nome_sportello: this.nomeSportello.nativeElement.value,
                 descrizione_sportello: this.descrizioneSportello.nativeElement.value,
@@ -106,9 +111,9 @@ export class CreaSportelloComponent {
                 giorni: giorni,
                 iscrizioni: []
             };
-        })
 
-        this.sportelloService.creaSportello(this.sportello, localStorage.getItem('auth-id')!).subscribe(result => {}, error => alert(error));
+	    this.sportelloService.creaSportello(sportello, localStorage.getItem('auth-id')!).subscribe(result => location.reload(), error => {if (!error.message.includes("during parsing")) alert(error.message); location.reload();});
+        });
     }
 
 }

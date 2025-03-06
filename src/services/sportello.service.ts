@@ -9,7 +9,7 @@ import {Iscrizione} from '../models/Iscrizione';
 })
 export class SportelloService {
 
-    private readonly apiUrl: string = 'https://172.18.8.186:8888/sportello/';
+    private readonly apiUrl: string = 'https://reviewhub.chilesotti.it:8888/sportello/';
 
     constructor(private http: HttpClient) {
     }

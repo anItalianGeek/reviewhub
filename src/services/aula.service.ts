@@ -8,7 +8,7 @@ import {Aula} from '../models/Aula';
 })
 export class AulaService {
 
-    private readonly apiUrl = 'https://172.18.8.186:8888/aula';
+    private readonly apiUrl = 'https://reviewhub.chilesotti.it:8888/aula';
 
     constructor(private http: HttpClient) {
     }
