@@ -13,6 +13,7 @@
             <!--    <span class="span">
                 <a (click)="showPasswordRecoveryForm = !showPasswordRecoveryForm">Password Dimenticata?</a>
             </span>-->
+            <div *ngIf="loginError" class="error-message">{{errorMessage}}</div>
             <button class="submit" type="button" (click)="login()">Accedi</button>
             <span class="span">Non hai un account? <a (click)="loginPage = !loginPage">Registrati</a></span>
         </form>
@@ -39,6 +40,10 @@
             <span class="input-span">
                 <label for="password" class="label">Password</label>
                 <input type="password" name="password" id="password1" required #password_signup/>
+            </span>
+            <span class="input-span">
+                <label for="password" class="label">Conferma Password</label>
+                <input type="password" name="password" id="password_conf" required #password_signup_check/>
             </span>
             <span class="input-span">
                 <label for="nome" class="label">Nome</label>

@@ -1,51 +1,112 @@
-* {
-    font-family: 'Montserrat', sans-serif;
-}
+/* Palette di colori: definita "hardcoded" direttamente nelle regole */
+/* (Il blocco :root è stato rimosso perché non viene usato altrove) */
 
+/* Stile per il componente sportello-compact-view */
 .sportello-compact {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin-bottom: 15px;
+    background-color: #ffffff;
     border-radius: 8px;
+    padding: 16px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #3a6ea5;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
-.sportello-compact .materia {
-    font-weight: bold;
-    color: #007BFF;
-    font-size: 16px;
+.sportello-compact:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-.sportello-compact p {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-}
-
+/* Header dello sportello */
 .sportello-compact .header {
-    font-weight: bold;
-    font-size: 18px;
-    color: #007BFF;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #3a6ea5;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: color 0.2s ease;
 }
 
-.sportello-compact .docente,
-.sportello-compact .posti-rimasti {
+.sportello-compact:hover .header {
+    color: #6e9cd2;
+}
+
+/* Informazioni dello sportello */
+.sportello-compact p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #333333;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.sportello-compact strong {
+    font-weight: 500;
+    color: #666666;
+    margin-right: 4px;
+}
+
+/* Stile per materia */
+.sportello-compact .materia {
+    color: #5c946e;
+    font-weight: 500;
+}
+
+/* Stile per docente */
+.sportello-compact .docente {
     font-style: italic;
-    font-size: 14px;
-    color: #666;
 }
 
-.sportello-compact .posti-rimasti {
-    color: #e74c3c;
-    font-weight: bold;
+/* Stili per i posti */
+.sportello-compact .posti-massimi span {
+    color: #333333;
+    font-weight: 500;
 }
 
-.sportello-compact .docente span,
 .sportello-compact .posti-rimasti span {
+    color: #ff6b6b;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+.sportello-compact .posti-rimasti i {
     font-weight: normal;
+    color: #666666;
+}
+
+/* Animazione pulse per posti disponibili */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Media query per responsive design */
+@media (max-width: 768px) {
+    .sportello-compact {
+        padding: 14px 16px;
+    }
+
+    .sportello-compact .header {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sportello-compact p {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 6px 0;
+    }
+
+    .sportello-compact p span {
+        margin-top: 2px;
+    }
 }

@@ -72,15 +72,6 @@ export class UserViewComponent implements OnChanges {
         );
     }
 
-    disiscriviDalCorso(id: number) {
-        this.sportelloService.rimuoviIscritto(id, this.utente.email, localStorage.getItem('auth-id')!).subscribe(
-            response => {
-                location.reload()
-            },
-            error => alert(error)
-        )
-    }
-
     cambiaPassword() {
         if (this.cambioPassword){
             this.nuovaPassword.nativeElement.value = '';
@@ -94,6 +85,10 @@ export class UserViewComponent implements OnChanges {
             this.confermaPassword.nativeElement.value = '';
             this.confermaPassword.nativeElement.style.display = 'none';
         }
+    }
+
+    route(path: string) {
+        this.router.navigateByUrl(path);
     }
 
 }

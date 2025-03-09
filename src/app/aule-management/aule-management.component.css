@@ -2,127 +2,197 @@
     box-sizing: border-box;
 }
 
+/* Stili generali */
 #main {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    color: #333333;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem auto;
+    gap: 24px;
+}
+
+/* Container per creazione aula */
+#main > div:first-of-type {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 100%;
     max-width: 600px;
-    font-family: 'Arial', sans-serif;
-}
-
-#main > div:nth-child(2) {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    width: 100%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#main > div:nth-child(2) div {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-out;
 }
 
-#main > div:nth-child(2) label {
-    flex: 1;
-    font-size: 14px;
-    color: #495057;
-    margin-right: 0.5rem;
-    text-align: right;
+#main > div:first-of-type:hover {
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.15);
 }
 
-#main > div:nth-child(2) input {
-    flex: 2;
-    padding: 0.5rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #495057;
-    transition: border-color 0.3s ease;
+/* Container per input nella sezione di creazione */
+#main > div:first-of-type > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 6px;
 }
 
-#main > div:nth-child(2) input:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#main > div:nth-child(2) button {
-    width: 100%;
-    padding: 0.7rem;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#main > div:nth-child(2) button:hover {
-    background-color: #0056b3;
-}
-
+/* Lista delle aule */
 .aula-list {
     background-color: #ffffff;
-    border: 1px solid #ced4da;
     border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     width: 100%;
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: slideIn 0.4s ease-out;
 }
 
-.aula-list label {
+.aula-list:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Label per tutti gli input */
+label {
     display: block;
-    font-size: 14px;
-    color: #495057;
-    margin-top: 0.5rem;
+    margin-bottom: 4px;
+    color: #666666;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
-.aula-list input {
+/* Stili per gli input */
+input {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #495057;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding: 12px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333333;
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.aula-list input:focus {
+input:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #3a6ea5;
+    box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.2);
 }
 
-.aula-list button {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-    color: #fff;
-    background-color: #28a745;
+/* Stile per input numerico */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Stili per i pulsanti */
+button {
+    background-color: #3a6ea5;
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 0.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.aula-list button:hover {
-    background-color: #218838;
+button:hover {
+    background-color: #6e9cd2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.aula-list button:last-child {
-    background-color: #dc3545;
+button:active {
+    transform: translateY(0);
 }
 
-.aula-list button:last-child:hover {
-    background-color: #c82333;
+/* Pulsante per cancellare l'aula */
+button:last-child {
+    background-color: #ff6b6b;
+    grid-column: span 2;
+}
+
+button:last-child:hover {
+    background-color: #ff8c8c;
+}
+
+/* Pulsante per salvare modifiche */
+button:nth-last-child(2) {
+    background-color: #5c946e;
+    grid-column: span 2;
+    margin-bottom: 8px;
+}
+
+button:nth-last-child(2):hover {
+    background-color: #7ab08d;
+}
+
+/* Animazioni */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Media queries per responsive design */
+@media (max-width: 768px) {
+    .aula-list {
+        grid-template-columns: 1fr;
+    }
+
+    button:last-child,
+    button:nth-last-child(2) {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    #main {
+        padding: 16px 12px;
+    }
+
+    #main > div:first-of-type,
+    .aula-list {
+        padding: 16px;
+    }
+
+    input, button {
+        padding: 10px 12px;
+    }
 }

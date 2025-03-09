@@ -2,8 +2,8 @@
     <div style="display: flex; justify-content: space-between; flex-direction: row">
         <h2>{{username}}</h2>
         <div style="display: flex; justify-content: space-between; flex-direction: row; gap: 10px">
-            <button (click)="eliminaUtente()">Elimina Utente</button>
-            <button (click)="salvaModifiche()" *ngIf="mostraTastoSalvaModifiche">Salva Modifiche</button>
+            <button (click)="eliminaUtente()" style="max-height: 40px; background: lightcoral">Elimina Utente</button>
+            <button (click)="salvaModifiche()" *ngIf="mostraTastoSalvaModifiche" style="max-height: 40px; background: lightgreen">Salva Modifiche</button>
         </div>
     </div>
     <div id="container">
@@ -49,8 +49,7 @@
         <h2>Iscrizioni Dell'utente</h2>
         <div class="data-container">
             <div *ngFor="let sportello of sportelliPrenotati">
-                <app-sportello-compact-view [sportello]="sportello"></app-sportello-compact-view>
-                <button (click)="disiscriviDalCorso(sportello.id_sportello)">Disicrivi Dal Corso</button>
+                <app-sportello-compact-view [sportello]="sportello" (click)="route('sportello/' + sportello.id_sportello)"></app-sportello-compact-view>
             </div>
         </div>
     </div>

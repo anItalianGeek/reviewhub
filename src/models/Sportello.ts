@@ -8,10 +8,9 @@ export interface Sportello {
     readonly id_sportello: number;
     nome_sportello: string;
     descrizione_sportello: string;
-    max_iscritti: number;
-    num_iscritti: number;
     aula: Aula;
     materia: Materia;
+    sportello_disponibile: boolean;
     docente_responsabile: Persona;
     giorni: Giorno[];
     iscrizioni: IscrizioneSportello[];

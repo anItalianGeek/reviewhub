@@ -1,5 +1,7 @@
 export interface Giorno {
     id: GiornoId;
+    max_iscritti: number;
+    num_iscritti: number;
 }
 
 export interface GiornoId {

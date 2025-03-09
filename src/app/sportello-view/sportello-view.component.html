@@ -30,9 +30,10 @@
                         <tr>
                             <th>Data/Ora Inizio</th>
                             <th>Data/Ora Fine</th>
-                            <th *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">-</th>
+                            <th>Posti Rimasti</th>
+                            <th>-</th>
                         </tr>
-                        <tr *ngFor="let giorno of sportello.giorni" >
+                        <tr *ngFor="let giorno of sportello.giorni">
                             <td>
                                 <input type="datetime-local" [(ngModel)]="giorno.id.data_inizioId" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)" (keyup)="mostraTastoSalvaModifiche = true">
                                 <input type="datetime-local" value="{{giorno.id.data_inizioId}}" *ngIf="utente.ruolo === 'STUDENT'" disabled>
@@ -41,26 +42,30 @@
                                 <input type="datetime-local" [(ngModel)]="giorno.id.data_fineId" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)" (keyup)="mostraTastoSalvaModifiche = true">
                                 <input type="datetime-local" value="{{giorno.id.data_fineId}}" *ngIf="utente.ruolo === 'STUDENT'" disabled>
                             </td>
+                            <td><input type="number" id="" value="{{giorno.max_iscritti - giorno.num_iscritti}}" disabled></td>
                             <td *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)"><button (click)="cancellaData(giorno.id.data_inizioId, giorno.id.data_fineId); mostraTastoSalvaModifiche = true">Cancella Data</button></td>
+                            <td *ngIf="utente.ruolo === 'STUDENT'">
+                                <button *ngIf="controllaSeIscritto(giorno.id)" (click)="disiscrivi(giorno.id)" style="background: lightcoral">Cancella Iscrizione</button>
+                                <button *ngIf="!controllaSeIscritto(giorno.id)" (click)="iscrivi(giorno.id)" style="background: lightgreen">Iscriviti</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="data-container" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
-                <div *ngFor="let iscritto of iscrizioniSportello | async">
-                    <span>{{iscritto}}</span>
-                    <button *ngIf="utente.ruolo === 'ADMIN'" (click)="rimuoviIscritto(iscritto); mostraTastoSalvaModifiche = true">Rimuovi</button>
+                <div *ngFor="let iscrizione of iscrizioniSportello | async">
+                    <table>
+                        <tr>
+                            <th>Iscritti del: {{iscrizione.id.data_inizioId | date:'dd/MM/yyyy hh:mm'}} - {{iscrizione.id.data_fineId | date:'dd/MM/yyyy hh:mm'}}</th>
+                        </tr>
+                        <tr>
+                            <td *ngFor="let iscritto of iscrizione.iscritti" style="display: flex; justify-content: space-between">
+                                <span>{{iscritto}}</span>
+                                <button *ngIf="utente.ruolo === 'ADMIN'" (click)="rimuoviIscritto(iscritto, iscrizione.id)">Rimuovi</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </div>
-            <div class="data-container" *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)">
-                <label for="postiMax">Posti Totali: </label>
-                <input type="number" name="postiMax" id="postiMax" min="{{sportello.num_iscritti}}" [(ngModel)]="sportello.max_iscritti" (keyup)="mostraTastoSalvaModifiche = true">
-            </div>
-            <div class="data-container" *ngIf="utente.ruolo === 'STUDENT'">
-                <p>Posti Disponibili: {{(sportello.max_iscritti - sportello.num_iscritti)}}</p>
-                <p>Posti Totali: {{sportello.max_iscritti}}</p>
-                <button *ngIf="alreadySubscribed" (click)="disiscrivi()">Cancella Iscrizione</button>
-                <button *ngIf="!alreadySubscribed" (click)="iscrivi()">Iscriviti</button>
             </div>
         </div>
     </div>

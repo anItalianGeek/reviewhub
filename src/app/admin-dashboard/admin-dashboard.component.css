@@ -1,53 +1,218 @@
-* {
-    font-family: 'Montserrat', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ecf0f1;
+    color: #34495e;
+    margin: 0;
+    padding: 0;
 }
 
-#main {
-    height: 100vh;
-    padding: 20px;
-    /*display: flex;
-    justify-content: center;
-    align-items: center;*/
+h1 {
+    margin-bottom: 20px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 2rem;
 }
 
-/* Pulsanti */
+h2 {
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+/* Bottoni generici */
 button {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    background-color: #007bff;
+    background-color: #3498db;
     color: white;
     border: none;
+    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s ease;
+    margin-left: 10px;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 600px) {
-    /* Seleziono il primo div figlio di #main (cioè il contenitore con h1 e i pulsanti) */
-    #main > div:first-child {
-        /* Forzo la disposizione in colonna, sovrascrivendo l’inline style */
+button:active {
+    transform: translateY(0);
+}
+
+/* Bottoni per azioni specifiche */
+button[click*="elimina"] {
+    background-color: #e74c3c;
+}
+
+button[click*="elimina"]:hover {
+    background-color: #c0392b;
+}
+
+button[click*="salva"] {
+    background-color: #2ecc71;
+}
+
+button[click*="salva"]:hover {
+    background-color: #27ae60;
+}
+
+button[click*="cancella"] {
+    background-color: #e74c3c;
+}
+
+button[click*="cancella"]:hover {
+    background-color: #c0392b;
+}
+
+/* Input e selezioni */
+input, select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px;
+    transition: border-color 0.3s;
+    flex: 1;
+    max-width: 250px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Elemento separatore */
+hr {
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+/* Animazioni per elementi che appaiono */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+input[style*="display: none"] {
+    display: none;
+}
+
+input:not([style*="display: none"]),
+select:not([style*="display: none"]) {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* ----------------------------------- */
+/* STILI PER ADMIN DASHBOARD */
+/* ----------------------------------- */
+
+#main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#main #container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+#main #container:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Bottoni della dashboard */
+#main div[style*="display: flex; align-items: center;"] button {
+    background-color: #3498db;
+    font-size: 0.85rem;
+    padding: 7px 14px;
+}
+
+@media screen and (max-width: 768px) {
+    #main {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .data-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .data-container p {
+        margin-bottom: 10px;
+    }
+
+    input, select {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    button {
+        margin-left: 0;
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+
+    div[style*="display: flex; justify-content: space-between"] {
+        flex-direction: column !important;
+    }
+
+    div[style*="display: flex; align-items: center"] {
         flex-direction: column !important;
         align-items: flex-start !important;
     }
 
-    /* Aggiungo margine inferiore al titolo per separarlo dai pulsanti */
-    #main > div:first-child h1 {
-        margin-bottom: 10px;
+    div[style*="display: flex; align-items: center"] button {
+        margin-bottom: 5px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .data-container div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
-    /* Seleziono il contenitore dei pulsanti (il div interno al primo div) */
-    #main > div:first-child > div {
-        /* Permetto l’avvolgimento dei pulsanti */
-        flex-wrap: wrap;
-        gap: 5px;
+    button {
+        width: 100%;
+        margin-top: 5px;
     }
 
-    /* Opzionale: se vuoi evitare qualunque overflow orizzontale, puoi forzare l’overflow */
-    #main {
-        overflow-x: auto;
+    #main #container {
+        padding: 15px;
     }
 }

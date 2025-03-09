@@ -8,7 +8,10 @@
     <p class="docente">
         <strong>Docente:</strong> {{sportello.docente_responsabile.nome + " " + sportello.docente_responsabile.cognome}}
     </p>
-    <p class="posti-rimasti">
-        <strong>Posti Rimasti:</strong> <span>{{(sportello.max_iscritti - sportello.num_iscritti)}}</span>
+    <p class="posti-massimi">
+        <strong>Posti Massimi: </strong> <span> {{sportello.giorni[0].max_iscritti}}</span>
+    </p>
+    <p class="posti-rimasti" *ngFor="let giornata of sportello.giorni">
+        <strong>Posti Disponibili il <i>{{giornata.id.data_inizioId | date:'dd/MM/yyyy'}}:</i></strong> <span> {{giornata.max_iscritti - giornata.num_iscritti}}</span>
     </p>
 </div>
