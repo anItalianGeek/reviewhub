@@ -1,4 +1,6 @@
+import {GiornoId} from './Giorno';
+
 export interface Iscrizione {
-    idSportello: number;
+    id: GiornoId;
     iscritti: string[];
 }

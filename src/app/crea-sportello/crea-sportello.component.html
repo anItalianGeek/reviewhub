@@ -25,18 +25,20 @@
         <label for="fine">Data/Ora Fine</label>
         <input type="datetime-local" name="fine" id="fine" #fine>
         <button (click)="aggiungiOrario()">Aggiungi Orario</button>
-        <table>
-            <tr>
-                <th>Data/Ora Inizio</th>
-                <th>Data/Ora Fine</th>
-                <th>-</th>
-            </tr>
-            <tr *ngFor="let orario of orari">
-                <td><input type="datetime-local" [(ngModel)]="orario.data_inizioId"></td>
-                <td><input type="datetime-local" [(ngModel)]="orario.data_fineId"></td>
-                <td><button (click)="cancellaData(orario)">Cancella Data</button></td>
-            </tr>
-        </table>
+        <div id="tableContainer">
+            <table>
+                <tr>
+                    <th>Data/Ora Inizio</th>
+                    <th>Data/Ora Fine</th>
+                    <th>-</th>
+                </tr>
+                <tr *ngFor="let orario of orari">
+                    <td><input type="datetime-local" [(ngModel)]="orario.data_inizioId"></td>
+                    <td><input type="datetime-local" [(ngModel)]="orario.data_fineId"></td>
+                    <td><button (click)="cancellaData(orario)">Cancella Data</button></td>
+                </tr>
+            </table>
+        </div>
         <button (click)="creaSportello()">Crea Sportello</button>
     </div>
 </div>

@@ -28,15 +28,15 @@ export class PersonaService {
     getPersonaById(id: String, utente: string): Observable<Persona> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
-	let observable: Observable<Persona> = this.http.get<Persona>(this.apiUrl + id, {params: params, headers: headers});
+        let observable: Observable<Persona> = this.http.get<Persona>(this.apiUrl + id, {params: params, headers: headers});
         observable.subscribe((persona: Persona) => {}, error => {
-	    if (error.status == 401) {
-		localStorage.removeItem('auth-id');
-		localStorage.removeItem('auth-role');
-		localStorage.removeItem('auth-token');
-	    }
-	});
-	return observable;
+            if (error.status == 401){
+                localStorage.removeItem('auth-id');
+                localStorage.removeItem('auth-role');
+                localStorage.removeItem('auth-token');
+            }
+        });
+        return observable;
     }
 
     logIn(persona: Persona): Observable<{ token: string, ruolo: string}> {
@@ -60,8 +60,8 @@ export class PersonaService {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
         let observable: Observable<Persona> = this.http.put<Persona>(this.apiUrl + 'modify/' + persona.email.split("@")[0], persona, {params: params, headers: headers});
-	observable.subscribe(success => {}, error => {});
-	return observable;
+        observable.subscribe(success => {}, error => {});
+        return observable;
     }
 
     cancellaPersona(persona: string, utente: string): Observable<{ response: string }> {

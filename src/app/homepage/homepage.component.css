@@ -1,116 +1,98 @@
-* {
-    font-family: 'Montserrat', sans-serif;
-}
+/* Palette di colori: definizioni eliminate, i valori sono stati iniettati direttamente */
 
-/* Palette di colori */
-:root {
-    --primary-bg: #777777;
-    --secondary-bg: #dbe4ff;
-    --accent: #809bce;
-    --text-color: #3d348b;
-    --border-color: #6a4c93;
-}
-
-/* Stile generale */
-body {
-    color: var(--text-color);
-    background-color: var(--primary-bg);
-    margin: 0;
-    padding: 0;
-}
-
+/* Stili generali */
 #main {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    color: #333333; /* var(--text) */
+    background-color: #f8f9fa; /* var(--background) */
+    min-height: 100vh;
     padding: 20px;
 }
 
-#mainDiv > div {
-    background-color: var(--secondary-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    padding: 30px; /* Maggiore spazio interno */
-    margin-bottom: 40px; /* Maggiore spazio tra i contenitori */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+main {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.sportello {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+#mainDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-#mainDiv > div:hover, .sportello:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
+/* Header con benvenuto e bottoni */
 #msgBenvenuto {
-    font-size: larger;
-    font-weight: bolder;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+    color: #3a6ea5; /* var(--primary) */
+    transition: transform 0.3s ease;
 }
 
-/* Pulsanti */
+#msgBenvenuto:hover {
+    transform: translateY(-2px);
+}
+
 #buttons {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
 }
 
 button {
-    background-color: deepskyblue;
+    background-color: #3a6ea5; /* var(--primary) */
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* var(--shadow) */
 }
 
 button:hover {
-    background-color: lightblue;
-    color: black;
+    background-color: #6e9cd2; /* var(--primary-light) */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* var(--shadow) */
 }
 
-/* Input e label */
-#mainDiv > #pulsantiSportelli {
+button:active {
+    transform: translateY(0);
+}
+
+/* Pulsanti per selezione sportelli */
+#pulsantiSportelli {
     display: flex;
     align-items: center;
-    gap: 15px; /* Spazio tra gli elementi */
-    flex-wrap: wrap; /* Gestisce il caso di schermi piccoli */
+    gap: 12px;
+    background-color: #ffffff; /* var(--card-bg) */
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* var(--shadow) */
 }
 
-label {
-    color: var(--text-color);
+#pulsantiSportelli span {
+    font-weight: 500;
+    color: #333333; /* var(--text) */
 }
 
-/* Stile per i radio button */
-input[type="radio"] {
-    appearance: none; /* Rimuove lo stile predefinito */
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 50%; /* Forma circolare */
-    background-color: lightgray; /* Sfondo visibile */
-    outline: none;
+#pulsantiSportelli label {
+    margin-right: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #666666; /* var(--text-light) */
+    transition: color 0.2s ease;
 }
 
-/* Stile quando selezionato */
-input[type="radio"]:checked {
-    background-color: gray;
-    border-color: var(--accent);
-    box-shadow: 0 0 6px rgba(128, 155, 206, 0.6); /* Leggera ombra colorata */
+#pulsantiSportelli label:hover {
+    color: #3a6ea5; /* var(--primary) */
 }
 
-/* Effetto hover */
-input[type="radio"]:hover {
-    border-color: var(--text-color);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Ombra leggera */
-}
-
-span {
-    font-weight: bold;
+#pulsantiSportelli input[type="radio"] {
+    accent-color: #3a6ea5; /* var(--primary) */
+    cursor: pointer;
+    margin-right: 12px;
 }
 
 /* Barra di ricerca */
@@ -119,75 +101,144 @@ span {
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 350px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .input {
     width: 100%;
-    height: 40px;
+    height: 48px;
     line-height: 28px;
-    padding: 0 1rem;
-    padding-left: 2.5rem;
-    border: 2px solid transparent;
+    padding: 0 16px 0 48px;
     border-radius: 8px;
+    border: 2px solid #e0e0e0; /* var(--border) */
+    background-color: #ffffff; /* var(--card-bg) */
+    transition: border 0.3s ease;
     outline: none;
-    background-color: #f3f3f4;
-    color: #0d0c22;
-    transition: .3s ease;
+    font-size: 1rem;
+}
+
+.input:focus {
+    border-color: #3a6ea5; /* var(--primary) */
+    box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.2);
 }
 
 .input::placeholder {
-    color: #9e9ea7;
-}
-
-.input:focus, input:hover {
-    outline: none;
-    border-color: rgba(161, 161, 161, 0.4);
-    background-color: #fff;
-    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+    color: #666666; /* var(--text-light) */
 }
 
 .icon {
     position: absolute;
-    left: 1rem;
-    fill: #9e9ea7;
-    width: 1rem;
-    height: 1rem;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    fill: #666666; /* var(--text-light) */
+    transition: fill 0.3s ease;
 }
 
-/* Media Query per dispositivi mobili */
-@media screen and (max-width: 600px) {
-    /* Riduce il padding generale per sfruttare meglio lo spazio */
-    #main {
-        padding: 10px;
-    }
-    /* Riduce padding e margine interno dei contenitori */
-    #mainDiv > div {
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-    /* Riorganizza i pulsanti in colonna */
-    #buttons {
+.input:focus + .icon {
+    fill: #3a6ea5; /* var(--primary) */
+}
+
+/* Lista sportelli */
+.sportello {
+    display: block;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* var(--shadow) */
+}
+
+.sportello:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* var(--shadow) */
+}
+
+/* Messaggi di "Nessuno Sportello Disponibile" */
+div[class="sportelliTrovati"],
+div:not([class]) {
+    text-align: center;
+    padding: 24px;
+    background-color: #ffffff; /* var(--card-bg) */
+    border-radius: 8px;
+    color: #666666; /* var(--text-light) */
+    font-style: italic;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* var(--shadow) */
+}
+
+/* Loader */
+app-loader {
+    background-color: #f8f9fa; /* var(--background) */
+}
+
+/* Media queries per responsive design */
+@media (max-width: 768px) {
+    #mainDiv > div:first-child {
         flex-direction: column;
-        align-items: stretch;
+        gap: 16px;
     }
-    button {
-        width: 100%;
-        padding: 10px;
-        font-size: 0.9rem;
+
+    #buttons {
+        flex-wrap: wrap;
+        justify-content: center;
     }
-    /* Adatta la barra di ricerca a schermi più piccoli */
+
+    #pulsantiSportelli {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .group {
         max-width: 100%;
     }
+
+    #msgBenvenuto {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #main {
+        padding: 16px 12px;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
     .input {
-        height: 35px;
-        font-size: 0.9rem;
+        height: 42px;
     }
-    /* Sistema la disposizione dei radio button e label */
-    #mainDiv > #pulsantiSportelli {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+}
+
+/* Animazioni */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#mainDiv > div {
+    animation: fadeIn 0.4s ease-out;
+}
+
+#mainDiv > div:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+#mainDiv > div:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+#mainDiv > div:nth-child(4) {
+    animation-delay: 0.3s;
 }

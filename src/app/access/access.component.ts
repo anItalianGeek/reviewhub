@@ -4,6 +4,7 @@ import {PersonaService} from '../../services/persona.service';
 import {Sha256Service} from '../../services/sha256.service';
 import {Router} from '@angular/router';
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
+import {TmplAstLetDeclaration} from '@angular/compiler';
 
 @Component({
     selector: 'app-access',
@@ -16,6 +17,8 @@ import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
 export class AccessComponent {
 
     loginPage: boolean;
+    loginError: boolean;
+    errorMessage!: string;
     showPasswordRecoveryForm: boolean;
     emailProposte: Subject<string>;
     emailAvailable: boolean;
@@ -24,6 +27,7 @@ export class AccessComponent {
     @ViewChild('recoveryEmail', {static: false}) recoveryEmail!: ElementRef<HTMLInputElement>;
     @ViewChild('email_signup', {static: false}) email_signup!: ElementRef<HTMLInputElement>;
     @ViewChild('password_signup', {static: false}) password_signup!: ElementRef<HTMLInputElement>;
+    @ViewChild('password_signup_check', {static: false}) password_signup_check!: ElementRef<HTMLInputElement>;
     @ViewChild('nome', {static: false}) nome!: ElementRef<HTMLInputElement>;
     @ViewChild('cognome', {static: false}) cognome!: ElementRef<HTMLInputElement>;
     @ViewChild('classe', {static: false}) classe!: ElementRef<HTMLInputElement>;
@@ -33,6 +37,8 @@ export class AccessComponent {
             this.route.navigateByUrl("/home");
         }
 
+        this.errorMessage = "Si è verificato un problema.";
+        this.loginError = false;
         this.showPasswordRecoveryForm = false;
         this.loginPage = true;
         this.emailAvailable = false;
@@ -45,6 +51,7 @@ export class AccessComponent {
     }
 
     login() {
+        this.loginError = false;
         this.personaService.logIn({
             email: this.email.nativeElement.value,
             password: this.password.nativeElement.value,
@@ -58,6 +65,11 @@ export class AccessComponent {
         }).subscribe(success => {
             this.route.navigateByUrl('/home');
         }, error => {
+            if (error.status === 401)
+                this.errorMessage = "Accesso Fallito. Si prega di verificare password o email.";
+            if (error.status >= 500)
+                this.errorMessage = "Si verificato un errore nel server.";
+            this.loginError = true;
             localStorage.removeItem('auth-token');
             localStorage.removeItem('auth-role');
             localStorage.removeItem('auth-id');
@@ -65,6 +77,11 @@ export class AccessComponent {
     }
 
     registrati() {
+        if (this.password_signup_check.nativeElement.value !== this.password.nativeElement.value) {
+            alert("le password inserite non coincidono!");
+            return;
+        }
+
         if (this.emailAvailable)
             this.personaService.creaPersona({
                 email: this.email_signup.nativeElement.value,
@@ -74,7 +91,12 @@ export class AccessComponent {
                 nome: this.nome.nativeElement.value,
                 cognome: this.cognome.nativeElement.value,
                 sportelli: null
-            }).subscribe(success => location.reload(), error => {if (error.status < 400) location.reload(); else alert(error.message + "\n(Tuttavia prova ad accedere al tuo account...)")});
+            }).subscribe(success => location.reload(), error => {
+                if (error.status >= 400)
+                    alert(error.message);
+                else
+                    location.reload();
+            });
         else
             alert("Email Non Disponibile! Impossibile creare l'account!");
     }

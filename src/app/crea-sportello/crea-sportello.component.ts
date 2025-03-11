@@ -53,13 +53,14 @@ export class CreaSportelloComponent {
     aggiungiOrario() {
         this.orari.push({
             data_inizioId: new Date(
-		new Date(this.inizio.nativeElement.value).getTime() -
-		new Date(this.inizio.nativeElement.value).getTimezoneOffset() * 60000
-	    ).toISOString().slice(0, 16),
+                new Date(this.inizio.nativeElement.value).getTime() -
+                new Date(this.inizio.nativeElement.value).getTimezoneOffset() * 60000
+            ).toISOString().slice(0, 16)
+            ,
             data_fineId: new Date(
-		new Date(this.fine.nativeElement.value).getTime() -
-		new Date(this.fine.nativeElement.value).getTimezoneOffset() * 60000	
-	    ).toISOString().slice(0, 16),
+                new Date(this.fine.nativeElement.value).getTime() -
+                new Date(this.fine.nativeElement.value).getTimezoneOffset() * 60000
+            ).toISOString().slice(0, 16),
             sportelloId: -1
         })
     }
@@ -77,17 +78,22 @@ export class CreaSportelloComponent {
         let giorni: Giorno[] = [];
         this.orari.forEach(value =>
             giorni.push({
-                id: value
+                id: value,
+                max_iscritti: Number(this.maxPosti.nativeElement.value),
+                num_iscritti: 0
             })
         );
+
+        if (giorni.length == 0) {
+            alert("Non puoi creare uno sportello senza alcuna data fissata!");
+            return;
+        }
 
         this.utente.subscribe(datiUtente => {
             let sportello: Sportello = {
                 id_sportello: -1,
                 nome_sportello: this.nomeSportello.nativeElement.value,
                 descrizione_sportello: this.descrizioneSportello.nativeElement.value,
-                max_iscritti: Number(this.maxPosti.nativeElement.value),
-                num_iscritti: 0,
                 aula: {
                     id: Number(this.aula.nativeElement.value),
                     nome: '',
@@ -97,6 +103,7 @@ export class CreaSportelloComponent {
                     nome: this.materia.nativeElement.value,
                     sportelli: []
                 },
+                sportello_disponibile: true,
                 docente_responsabile: {
                     email: localStorage.getItem('auth-id') + Enviroment.DOMAIN,
                     nome: datiUtente.nome,

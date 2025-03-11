@@ -10,15 +10,15 @@ import {FormsModule} from '@angular/forms';
 import {Sha256Service} from '../../services/sha256.service';
 
 @Component({
-  selector: 'app-user-view',
+    selector: 'app-user-view',
     imports: [
         SportelloCompactViewComponent,
         NgFor,
         NgIf,
         FormsModule
     ],
-  templateUrl: './user-view.component.html',
-  styleUrl: './user-view.component.css'
+    templateUrl: './user-view.component.html',
+    styleUrl: './user-view.component.css'
 })
 export class UserViewComponent implements OnChanges {
 
@@ -70,36 +70,23 @@ export class UserViewComponent implements OnChanges {
         );
     }
 
-    disiscriviDalCorso(id: number) {
-        this.sportelloService.rimuoviIscritto(id, this.utente.email, localStorage.getItem('auth-id')!).subscribe(
-            response => {location.reload()},
-            error => alert(error)
-        )
-    }
-
-    visualizzaCampiNuovaPassword() {
-        if (this.vecchiaPassword.nativeElement.value != '') {
-            this.nuovaPassword.nativeElement.style.display = 'initial';
-            this.confermaPassword.nativeElement.style.display = 'initial';
-        } else {
-            this.nuovaPassword.nativeElement.style.display = 'none';
-            this.confermaPassword.nativeElement.style.display = 'none';
-        }
-    }
-
     cambiaPassword() {
-        if (this.cambioPassword) {
-	    this.nuovaPassword.nativeElement.value = '';
-	    this.nuovaPassword.nativeElement.style.display = 'initial';
-	    this.confermaPassword.nativeElement.value = '';
-	    this.confermaPassword.nativeElement.style.display = "initial";
-	}
+        if (this.cambioPassword){
+            this.nuovaPassword.nativeElement.value = '';
+            this.nuovaPassword.nativeElement.style.display = 'initial';
+            this.confermaPassword.nativeElement.value = '';
+            this.confermaPassword.nativeElement.style.display = 'initial';
+        }
         else {
             this.nuovaPassword.nativeElement.value = '';
             this.nuovaPassword.nativeElement.style.display = 'none';
             this.confermaPassword.nativeElement.value = '';
             this.confermaPassword.nativeElement.style.display = 'none';
         }
+    }
+
+    route(path: string) {
+        this.router.navigateByUrl(path);
     }
 
 }

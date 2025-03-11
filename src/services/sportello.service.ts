@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Sportello} from '../models/Sportello';
 import {Observable} from 'rxjs';
 import {Iscrizione} from '../models/Iscrizione';
+import {GiornoId} from '../models/Giorno';
 
 @Injectable({
     providedIn: 'root'
@@ -50,22 +51,22 @@ export class SportelloService {
         return this.http.post<{ response: string }>(this.apiUrl + 'create', sportello, {params: params, headers: headers});
     }
 
-    iscriviAlloSportello(id: number, utente: string): Observable<string> {
+    iscriviAlloSportello(id: number, utente: string, giornata: GiornoId): Observable<string> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
-        return this.http.post<string>(this.apiUrl + 'subscribe/' + id, null, {params: params, headers: headers});
+        return this.http.post<string>(this.apiUrl + 'subscribe/' + id, giornata, {params: params, headers: headers});
     }
 
-    disicriviDalloSportello(id: number, utente: string): Observable<string> {
+    disicriviDalloSportello(id: number, utente: string, giornata: GiornoId): Observable<string> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
-        return this.http.delete<string>(this.apiUrl + 'unsubscribe/' + id, {params: params, headers: headers});
+        return this.http.post<string>(this.apiUrl + 'unsubscribe/' + id, giornata, {params: params, headers: headers});
     }
 
-    rimuoviIscritto(id: number, utenteDaCancellare: string, utente: string): Observable<{ response: string }> {
+    rimuoviIscritto(id: number, utenteDaCancellare: string, utente: string, giornata: GiornoId): Observable<{ response: string }> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
-        return this.http.delete<{ response: string }>(this.apiUrl + id + '/remove-subscription/' + utenteDaCancellare.split("@")[0], {params: params, headers: headers});
+        return this.http.post<{ response: string }>(this.apiUrl + id + '/remove-subscription/' + utenteDaCancellare.split("@")[0], giornata, {params: params, headers: headers});
     }
 
     cancellaSportello(id: number, utente: string): Observable<{ response: string }> {
