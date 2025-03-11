@@ -10,7 +10,7 @@ import {GiornoId} from '../models/Giorno';
 })
 export class SportelloService {
 
-    private readonly apiUrl: string = 'https://localhost:8888/sportello/';
+    private readonly apiUrl: string = 'https://reviewhub.chilesotti.it:8888/sportello/';
 
     constructor(private http: HttpClient) {
     }

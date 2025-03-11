@@ -11,7 +11,7 @@ import {Enviroment} from '../Enviroment';
 })
 export class PersonaService {
 
-    private readonly apiUrl: string = 'https://localhost:8888/users/';
+    private readonly apiUrl: string = 'https://reviewhub.chilesotti.it:8888/users/';
     constructor(private http: HttpClient, private sha256encryptor: Sha256Service) {
     }
 

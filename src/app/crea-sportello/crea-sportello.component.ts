@@ -90,7 +90,7 @@ export class CreaSportelloComponent {
         }
 
         this.utente.subscribe(datiUtente => {
-            this.sportelloService.creaSportello({
+            let sportello: Sportello = {
                 id_sportello: -1,
                 nome_sportello: this.nomeSportello.nativeElement.value,
                 descrizione_sportello: this.descrizioneSportello.nativeElement.value,
@@ -117,9 +117,10 @@ export class CreaSportelloComponent {
                 },
                 giorni: giorni,
                 iscrizioni: []
-            }, localStorage.getItem('auth-id')!).subscribe(result => {location.reload()}, error => {location.reload()});
-        })
+            };
 
+	    this.sportelloService.creaSportello(sportello, localStorage.getItem('auth-id')!).subscribe(result => location.reload(), error => {if (!error.message.includes("during parsing")) alert(error.message); location.reload();});
+        });
     }
 
 }

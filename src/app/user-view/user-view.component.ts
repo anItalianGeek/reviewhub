@@ -55,20 +55,18 @@ export class UserViewComponent implements OnChanges {
         if (this.nuovaPassword.nativeElement && this.confermaPassword.nativeElement)
             if (this.nuovaPassword.nativeElement.value == this.confermaPassword.nativeElement.value)
                 this.utente.password = this.confermaPassword.nativeElement.value;
-            else {
-                alert("La nuova password non combacia con la conferma!");
-                return;
-            }
+	    else {
+	        alert("La nuova password con corrisponde con la password di conferma!");
+		return;
+	    }
 
         this.personaService.modificaPersona(this.utente, localStorage.getItem('auth-id')!).subscribe(success => location.reload(), error => {if (error.status >= 400) alert(error.message); else location.reload();});
     }
 
     eliminaUtente() {
         this.personaService.cancellaPersona(this.utente.email, localStorage.getItem('auth-id')!).subscribe(
-            response => {
-                location.reload()
-            },
-            error => alert(error)
+            response => {location.reload()},
+            error => alert(error.message)
         );
     }
 
