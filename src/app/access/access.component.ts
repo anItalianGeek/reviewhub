@@ -77,8 +77,7 @@ export class AccessComponent {
     }
 
     registrati() {
-        if (this.password_signup_check.nativeElement.value !== this.password.nativeElement.value) {
-            alert("le password inserite non coincidono!");
+        if (this.password_signup_check.nativeElement.value !== this.password_signup.nativeElement.value) {
             return;
         }
 

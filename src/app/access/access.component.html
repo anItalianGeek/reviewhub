@@ -44,6 +44,7 @@
             <span class="input-span">
                 <label for="password" class="label">Conferma Password</label>
                 <input type="password" name="password" id="password_conf" required #password_signup_check/>
+		<div *ngIf="password_signup.value !== password_signup_check.value" style="color: red">Le password non corrispondono!</div>
             </span>
             <span class="input-span">
                 <label for="nome" class="label">Nome</label>
