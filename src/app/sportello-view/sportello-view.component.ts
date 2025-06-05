@@ -156,5 +156,9 @@ export class SportelloViewComponent implements OnInit {
                 });
         });
     }
+    
+    isDateExpired(dataInizioId: string | Date) {
+        return new Date(dataInizioId).getTime() < new Date().getTime();
+    }
 
 }

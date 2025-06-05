@@ -44,9 +44,10 @@
                             </td>
                             <td><input type="number" id="" value="{{giorno.max_iscritti - giorno.num_iscritti}}" disabled></td>
                             <td *ngIf="utente.ruolo === 'ADMIN' || (utente.ruolo === 'TEACHER' && sportello.docente_responsabile.email === utente.email)"><button (click)="cancellaData(giorno.id.data_inizioId, giorno.id.data_fineId); mostraTastoSalvaModifiche = true">Cancella Data</button></td>
-                            <td *ngIf="utente.ruolo === 'STUDENT'">
-                                <button *ngIf="controllaSeIscritto(giorno.id)" (click)="disiscrivi(giorno.id)" style="background: lightcoral">Cancella Iscrizione</button>
-                                <button *ngIf="!controllaSeIscritto(giorno.id)" (click)="iscrivi(giorno.id)" style="background: lightgreen">Iscriviti</button>
+                           <td *ngIf="utente.ruolo === 'STUDENT'">
+				<button *ngIf="isDateExpired(giorno.id.data_inizioId)" style="background: lightgray">Iscrizioni Chiuse</button>
+                                <button *ngIf="controllaSeIscritto(giorno.id) && !isDateExpired(giorno.id.data_inizioId)" (click)="disiscrivi(giorno.id)" style="background: lightcoral">Cancella Iscrizione</button>
+                                <button *ngIf="!controllaSeIscritto(giorno.id) && !isDateExpired(giorno.id.data_inizioId)" (click)="iscrivi(giorno.id)" style="background: lightgreen">Iscriviti</button>
                             </td>
                         </tr>
                     </table>
