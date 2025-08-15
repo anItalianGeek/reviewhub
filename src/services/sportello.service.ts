@@ -4,20 +4,21 @@ import {Sportello} from '../models/Sportello';
 import {Observable} from 'rxjs';
 import {Iscrizione} from '../models/Iscrizione';
 import {GiornoId} from '../models/Giorno';
+import {Enviroment} from '../Enviroment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SportelloService {
 
-    private readonly apiUrl: string = 'https://reviewhub.chilesotti.it:8888/sportello/';
+    private readonly apiUrl: string = Enviroment.API_URL + 'sportello/';
 
     constructor(private http: HttpClient) {
     }
 
-    getAllSportelli(utente: string): Observable<Sportello[]> {
+    getAllSportelli(utente: string, offset: number, limit: number = 10): Observable<Sportello[]> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
-        let params = new HttpParams().set('author', utente);
+        let params = new HttpParams().set('author', utente).set('offset', offset.toString()).set('limit', limit.toString());
         return this.http.get<Sportello[]>(this.apiUrl + 'all', {params: params, headers: headers});
     }
 
@@ -27,21 +28,21 @@ export class SportelloService {
         return this.http.get<{ sportellos: Sportello[], iscritti: Iscrizione[] }>(this.apiUrl + '' + id, {params: params, headers: headers});
     }
 
-    getSportelliDisponibili(utente: string): Observable<Sportello[]> {
+    getSportelliDisponibili(utente: string, offset: number, limit: number = 10): Observable<Sportello[]> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
-        let params = new HttpParams().set('author', utente);
+        let params = new HttpParams().set('author', utente).set('offset', offset.toString()).set('limit', limit.toString());
         return this.http.get<Sportello[]>(this.apiUrl + 'available', {params: params, headers: headers});
     }
 
-    getSportelliPrenotati(utente: string): Observable<Sportello[]> {
+    getSportelliPrenotati(utente: string, offset: number, limit: number = 10): Observable<Sportello[]> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
-        let params = new HttpParams().set('author', utente);
+        let params = new HttpParams().set('author', utente).set('offset', offset.toString()).set('limit', limit.toString());
         return this.http.get<Sportello[]>(this.apiUrl + 'subscribed', {params: params, headers: headers});
     }
 
-    getSportelliBy(teacherUsername: string, utente: string): Observable<{ sportellos: Sportello[], iscritti: Iscrizione[] }> {
+    getSportelliBy(teacherUsername: string, utente: string, offset: number, limit: number = 10): Observable<{ sportellos: Sportello[], iscritti: Iscrizione[] }> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
-        let params = new HttpParams().set('author', utente);
+        let params = new HttpParams().set('author', utente).set('offset', offset.toString()).set('limit', limit.toString());
         return this.http.get<{ sportellos: Sportello[], iscritti: Iscrizione[] }>(this.apiUrl + 'by/' + teacherUsername, {params: params, headers: headers});
     }
 

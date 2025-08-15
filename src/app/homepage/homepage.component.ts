@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {Persona} from '../../models/Persona';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {SportelloCompactViewComponent} from '../sportello-compact-view/sportello-compact-view.component';
@@ -29,8 +29,9 @@ export class HomepageComponent implements OnDestroy {
     copiaSportelliOriginale!: Sportello[];
     sportelliTrovati: boolean;
     caricamentoCompletato: boolean;
+    currentPage = 0;
 
-    constructor(private personaService: PersonaService, private sportelloService: SportelloService, protected router: Router) {
+    constructor(private personaService: PersonaService, private sportelloService: SportelloService, protected router: Router, private cdr: ChangeDetectorRef) {
         this.sportelliTrovati = false;
         this.caricamentoCompletato = false;
         if (localStorage.getItem('auth-role') == null || localStorage.getItem('auth-id') == null || localStorage.getItem('auth-token') == null) {
@@ -40,14 +41,14 @@ export class HomepageComponent implements OnDestroy {
         }
         this.utente = personaService.getPersonaById(localStorage.getItem('auth-id')!, localStorage.getItem('auth-id')!);
         if (localStorage.getItem('auth-role') === 'TEACHER')
-            this.sportelloService.getSportelliBy(localStorage.getItem('auth-id')!, localStorage.getItem('auth-id')!)
+            this.sportelloService.getSportelliBy(localStorage.getItem('auth-id')!, localStorage.getItem('auth-id')!, 0)
                 .subscribe(dati => {
                     this.sportelli = of(dati.sportellos);
                     this.copiaSportelliOriginale = dati.sportellos;
                     this.caricamentoCompletato = true;
                 });
         else if (localStorage.getItem('auth-role') === 'ADMIN') {
-            this.sportelli = this.sportelloService.getAllSportelli(localStorage.getItem('auth-id')!);
+            this.sportelli = this.sportelloService.getAllSportelli(localStorage.getItem('auth-id')!, 0);
             this.sportelli.subscribe(dati => {
                 this.caricamentoCompletato = true;
                 this.copiaSportelliOriginale = dati;
@@ -61,11 +62,24 @@ export class HomepageComponent implements OnDestroy {
         this.router.navigateByUrl("/sportello/" + sportello);
     }
 
+    navigateToPage(page: number) {
+        if (page < 0)
+            return;
+        if (!this.prenotatiCB && !this.disponibiliCB)
+            this.sportelli = this.sportelloService.getAllSportelli(localStorage.getItem('auth-id')!, page * 10);
+        else if (this.prenotatiCB.nativeElement.checked)
+            this.sportelli = this.sportelloService.getSportelliPrenotati(localStorage.getItem('auth-id')!, page * 10);
+        else if (this.disponibiliCB.nativeElement.checked)
+            this.sportelli = this.sportelloService.getSportelliDisponibili(localStorage.getItem('auth-id')!, page * 10);
+        this.currentPage = page;
+        this.cdr.detectChanges();
+    }
+
     cercaSportelli(sportelliDisponibili: boolean) {
         if (sportelliDisponibili)
-            this.sportelli = this.sportelloService.getSportelliDisponibili(localStorage.getItem('auth-id')!);
+            this.sportelli = this.sportelloService.getSportelliDisponibili(localStorage.getItem('auth-id')!, 0);
         else
-            this.sportelli = this.sportelloService.getSportelliPrenotati(localStorage.getItem('auth-id')!);
+            this.sportelli = this.sportelloService.getSportelliPrenotati(localStorage.getItem('auth-id')!, 0);
         this.sportelli.subscribe(sportelliDisponibili => {
             this.sportelliTrovati = sportelliDisponibili.length == 0;
             this.copiaSportelliOriginale = sportelliDisponibili;

@@ -19,4 +19,9 @@
         <button *ngIf="modificheFatte" (click)="modificaAula(aula)">Salva Modifiche</button>
         <button (click)="cancellaAula(aula)">Cancella Aula</button>
     </div>
+    <div class="pagination" *ngIf="aule">
+        <button class="prev" (click)="navigateToPage(currentPage - 1)">Precedente</button>
+        <span class="page-number">{{ currentPage + 1 }}</span>
+        <button class="next" (click)="navigateToPage(currentPage + 1)">Prossima</button>
+    </div>
 </div>

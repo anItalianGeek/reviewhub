@@ -2,19 +2,20 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Aula} from '../models/Aula';
+import {Enviroment} from '../Enviroment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AulaService {
 
-    private readonly apiUrl = 'https://reviewhub.chilesotti.it:8888/aula';
+    private readonly apiUrl = Enviroment.API_URL + 'aula';
 
     constructor(private http: HttpClient) {
     }
 
-    getTutteAule(): Observable<Aula[]> {
-        let params = new HttpParams().set('author', localStorage.getItem('auth-id')!);
+    getTutteAule(offset: number, limit: number = 20): Observable<Aula[]> {
+        let params = new HttpParams().set('author', localStorage.getItem('auth-id')!).set('offset', offset.toString()).set('limit', limit.toString());
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         return this.http.get<Aula[]>(this.apiUrl, {headers: headers, params: params});
     }

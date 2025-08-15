@@ -29,6 +29,11 @@
             <div *ngIf="!sportelli">
                 Nessuno Sportello Disponibile.
             </div>
+            <div class="pagination" *ngIf="sportelli">
+                <button class="prev" (click)="navigateToPage(currentPage - 1)">Precedente</button>
+                <span class="page-number">{{ currentPage + 1 }}</span>
+                <button class="next" (click)="navigateToPage(currentPage + 1)">Prossima</button>
+            </div>
         </div>
     </main>
 </div>

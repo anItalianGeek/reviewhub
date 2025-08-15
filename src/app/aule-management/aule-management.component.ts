@@ -1,4 +1,4 @@
-import  { Component } from '@angular/core';
+import  { Component, ChangeDetectorRef } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Aula} from '../../models/Aula';
 import {AulaService} from '../../services/aula.service';
@@ -22,9 +22,10 @@ export class AuleManagementComponent {
 
     aule: Observable<Aula[]>;
     modificheFatte: boolean;
+    currentPage = 0;
 
-    constructor(private aulaService: AulaService) {
-        this.aule = aulaService.getTutteAule();
+    constructor(private aulaService: AulaService, private cdr: ChangeDetectorRef) {
+        this.aule = aulaService.getTutteAule(0);
         this.modificheFatte = false;
     }
 
@@ -39,6 +40,14 @@ export class AuleManagementComponent {
     cancellaAula(aula: Aula) {
         if (confirm("Sei sicuro di voler cancellare l'aula?"))
             this.aulaService.cancellaAula(aula).subscribe(success => location.reload());
+    }
+
+    navigateToPage(page: number) {
+        if (page < 0)
+            return;
+        this.aule = this.aulaService.getTutteAule(page * 20);
+        this.currentPage = page;
+        this.cdr.detectChanges();
     }
 
 }

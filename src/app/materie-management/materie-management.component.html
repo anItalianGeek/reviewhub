@@ -13,4 +13,9 @@
         <button *ngIf="modificheFatte" (click)="modificaMateria(materia)">Salva Modifiche</button>
         <button (click)="cancellaMateria(materia)">Cancella Materia</button>
     </div>
+    <div class="pagination" *ngIf="materie">
+        <button class="prev" (click)="navigateToPage(currentPage - 1)">Precedente</button>
+        <span class="page-number">{{ currentPage + 1 }}</span>
+        <button class="next" (click)="navigateToPage(currentPage + 1)">Prossima</button>
+    </div>
 </div>

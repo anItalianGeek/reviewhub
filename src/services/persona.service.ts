@@ -11,7 +11,7 @@ import {Enviroment} from '../Enviroment';
 })
 export class PersonaService {
 
-    private readonly apiUrl: string = 'https://reviewhub.chilesotti.it:8888/users/';
+    private readonly apiUrl: string = Enviroment.API_URL + 'users/';
     constructor(private http: HttpClient, private sha256encryptor: Sha256Service) {
     }
 
@@ -19,9 +19,9 @@ export class PersonaService {
         return this.http.post<any>(this.apiUrl + 'check', email, {headers: new HttpHeaders({'Authorization': 'Bearer '})});
     }
 
-    getTuttePersone(utente: string): Observable<{ persona: Persona, sportelli: Sportello[] }[]> {
+    getTuttePersone(utente: string, offset: number, limit: number = 30): Observable<{ persona: Persona, sportelli: Sportello[] }[]> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
-        let params = new HttpParams().set('author', utente);
+        let params = new HttpParams().set('author', utente).set('offset', offset.toString()).set('limit', limit.toString());
         return this.http.get<{ persona: Persona, sportelli: Sportello[] }[]>(this.apiUrl + 'all', {params: params, headers: headers})
     }
 

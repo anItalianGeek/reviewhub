@@ -44,8 +44,8 @@ export class CreaSportelloComponent {
         if (localStorage.getItem('auth-role') == null || localStorage.getItem('auth-id') == null || localStorage.getItem('auth-token') == null) {
             this.router.navigateByUrl("/login");
         }
-        this.auleEsistenti = aulaService.getTutteAule();
-        this.materieEsistenti = materiaService.getTutteMaterie();
+        this.auleEsistenti = aulaService.getTutteAule(0, 1000000);
+        this.materieEsistenti = materiaService.getTutteMaterie(0, 1000000);
         this.utente = personaService.getPersonaById(localStorage.getItem('auth-id')!, localStorage.getItem('auth-id')!);
         this.utente.subscribe((value) => {if (value.ruolo === "STUDENT") router.navigateByUrl("/home")})
     }

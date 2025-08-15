@@ -3,19 +3,20 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Aula} from '../models/Aula';
 import {Materia} from '../models/Materia';
+import {Enviroment} from '../Enviroment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MateriaService {
 
-    private readonly apiUrl = 'https://reviewhub.chilesotti.it:8888/materia';
+    private readonly apiUrl = Enviroment.API_URL + 'materia';
 
     constructor(private http: HttpClient) {
     }
 
-    getTutteMaterie(): Observable<Materia[]> {
-        let params = new HttpParams().set('author', localStorage.getItem('auth-id')!);
+    getTutteMaterie(offset: number, limit: number = 20): Observable<Materia[]> {
+        let params = new HttpParams().set('author', localStorage.getItem('auth-id')!).set('offset', offset.toString()).set('limit', limit.toString());
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         return this.http.get<Materia[]>(this.apiUrl, {headers: headers, params: params});
     }

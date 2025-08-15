@@ -1,6 +1,6 @@
 <div>
     <div style="display: flex; justify-content: space-between; flex-direction: row">
-        <h2>{{username}}</h2>
+        <h2>{{username ?? '(Nessun Username Presente)'}}</h2>
         <div style="display: flex; justify-content: space-between; flex-direction: row; gap: 10px">
             <button (click)="eliminaUtente()" style="max-height: 40px; background: lightcoral">Elimina Utente</button>
             <button (click)="salvaModifiche()" *ngIf="mostraTastoSalvaModifiche" style="max-height: 40px; background: lightgreen">Salva Modifiche</button>
@@ -8,19 +8,19 @@
     </div>
     <div id="container">
         <div class="data-container">
-            <p>{{utente.nome}}</p>
+            <p>{{utente.nome ?? '(Nessun Nome Presente)'}}</p>
             <input type="text" name="nameChanger" id="nameChanger" *ngIf="cambioNome" [(ngModel)]="utente.nome" (keyup)="mostraTastoSalvaModifiche = true">
             <button (click)="cambioNome = !cambioNome" *ngIf="!cambioNome">Modifica Nome</button>
             <button (click)="cambioNome = !cambioNome" *ngIf="cambioNome">Cancella Modifica</button>
         </div>
         <div class="data-container">
-            <p>{{utente.cognome}}</p>
+            <p>{{utente.cognome ?? '(Nessun Cognome Presente)'}}</p>
             <input type="text" name="cognomeChanger" id="cognomeChanger" *ngIf="cambioCognome" [(ngModel)]="utente.cognome" (keyup)="mostraTastoSalvaModifiche = true">
             <button (click)="cambioCognome = !cambioCognome" *ngIf="!cambioCognome">Modifica Cognome</button>
             <button (click)="cambioCognome = !cambioCognome" *ngIf="cambioCognome">Cancella Modifica</button>
         </div>
         <div class="data-container">
-            <p>{{utente.classe}}</p>
+            <p>{{utente.classe ?? '(Nessuna Classe Presente)'}}</p>
             <input type="text" name="classeChanger" id="classeChanger" *ngIf="cambioClasse" [(ngModel)]="utente.classe" (keyup)="mostraTastoSalvaModifiche = true">
             <button (click)="cambioClasse = !cambioClasse" *ngIf="!cambioClasse">Modifica Classe</button>
             <button (click)="cambioClasse = !cambioClasse" *ngIf="cambioClasse">Cancella Modifica</button>
