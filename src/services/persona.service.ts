@@ -64,6 +64,11 @@ export class PersonaService {
         return observable;
     }
 
+    refreshTokenAccesso(): Observable<{ token: string, ruolo: string }> {
+        let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
+        return this.http.post<{ token: string, ruolo: string }>(this.apiUrl + 'refresh-token', {}, {headers: headers});
+    }
+
     cancellaPersona(persona: string, utente: string): Observable<{ response: string }> {
         let headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('auth-token')});
         let params = new HttpParams().set('author', utente);
