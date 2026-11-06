@@ -2,6 +2,8 @@
 
 Angular frontend for the ReviewHub tutoring-desk system (*sportelli didattici*), developed as a final-year high school project at ITET "A. Chilesotti" (2024/2025).
 
+> **School project archive (2024/2025).** Preserved for reference, without active development or maintenance. Deployed exclusively at school, on a Raspberry Pi inside the school network (internal DNS, Apache with TLS, and `systemd`).
+
 The web interface adapts available views and actions based on the user's role stored in `localStorage` upon login:
 
 - **Students** view desk sessions they are enrolled in and sessions currently open for booking, with the ability to reserve an available seat slot. Other administrative views remain hidden.
@@ -13,8 +15,6 @@ Opening any session reveals its full details: subject, classroom location, respo
 *(Note: Role-based view switching is handled client-side for navigation; access enforcement and request validation rely on the backend API.)*
 
 **Backend API**: [anItalianGeek/reviewhub_restAPI](https://github.com/anItalianGeek/reviewhub_restAPI)
-
-> Deployed on a Raspberry Pi inside the school network (internal DNS, Apache with TLS reverse proxy, systemd service), so there is no public instance to link to.
 
 ---
 
